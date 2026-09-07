@@ -27,10 +27,10 @@ jobs:
 
       - name: Build Jupyter Book
         run: |
-          jupyter-book build Pencarian-Penambangan-Web/
+          jupyter-book build ppw/
 
       - name: Deploy to GitHub Pages
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          ghp-import -n -p -f Pencarian-Penambangan-Web/_build/html -b gh-pages
+          ghp-import -n -p -f ppw/_build/html -b gh-pages
