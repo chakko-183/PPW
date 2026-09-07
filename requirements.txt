@@ -1,0 +1,16 @@
+streamlit==1.37.0
+librosa==0.10.2.post1
+numpy
+scikit-learn
+joblib
+soundfile
+sounddevice
+pydub
+audio-recorder-streamlit
+tsfel
+opencv-python-headless
+
+jupyter-book==1.0.4
+ghp-import
+nbconvert
+nbformat

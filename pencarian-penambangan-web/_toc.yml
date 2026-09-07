@@ -1,0 +1,15 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+- file: bussinessUnderstanding
+- file: dataUnderstanding
+  sections:
+    - file: dataExploration
+    - file: oversampling
+- file: timeSeries
+- file: voiceDetection
+- file: voiceDetection-2
+- file: car
