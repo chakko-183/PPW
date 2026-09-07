@@ -13,7 +13,7 @@ img[alt="Typing SVG"] {
 
 <!-- Typing animation transparan -->
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=26&pause=1000&color=6793F7&background=00000000&width=600&lines=Hi%2C+everyone!+I'm+Ahmad+Mufid+Risqi.;Welcome+to+my+Jupyter+Notebook+profile!+" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=26&pause=1000&color=6793F7&background=00000000&width=600&lines=Hi%2C+everyone!+I'm+Ahmad+Mufid+Risqi.;Welcome+to+my+Jupyter+Notebook+profile!" alt="Typing SVG" />
 
 **NIM:** 230411100183
 
@@ -40,5 +40,3 @@ img[alt="Typing SVG"] {
 ## 🟢 Live Activity
 
 <img src="https://lanyard.cnrad.dev/api/754215172905762837" width="350" height="180" alt="Discord Status" />
-
----
