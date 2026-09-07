@@ -19,24 +19,3 @@ img[alt="Typing SVG"] {
 
 **Email:** sujatmikosuud@gmail.com
 
----
-
-## 🚀 Tech Stack & Tools
-
-<img src="https://skills.syvixor.com/api/icons?i=typescript,javascript,dart,php,nodejs,bun&theme=dark&background=00000000" height="40" /><br/>
-
-<img src="https://skills.syvixor.com/api/icons?i=react,nextjs,vue,nuxtjs,flutter,threejs&theme=dark&background=00000000" height="40" /><br/>
-
-<img src="https://skills.syvixor.com/api/icons?i=tailwind,express,nestjs,laravel,prisma,redis&theme=dark&background=00000000" height="40" /><br/>
-
-<img src="https://skills.syvixor.com/api/icons?i=mysql,postgresql,mongodb,firebase,drizzle,neon&theme=dark&background=00000000" height="40" /><br/>
-
-<img src="https://skills.syvixor.com/api/icons?i=supabase,docker,postman,git,figma,vite&theme=dark&background=00000000" height="40" /><br/>
-
-<img src="https://skills.syvixor.com/api/icons?i=unity,csharp&theme=dark&background=00000000" height="40" />
-
----
-
-## 🟢 Live Activity
-
-<img src="https://lanyard.cnrad.dev/api/754215172905762837" width="350" height="180" alt="Discord Status" />
