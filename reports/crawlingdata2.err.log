@@ -1,0 +1,62 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/site-packages/nbclient/client.py", line 1323, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+
+# PCA bekerja pada matriks dense, sedangkan TF-IDF berbentuk sparse matrix -> ubah ke dense
+tfidf_dense = tfidf_matrix.toarray()
+
+# --- 4.1 Analisis Explained Variance ---
+# Jumlah komponen maksimum dibatasi oleh min(jumlah dokumen, jumlah fitur)
+n_komponen_maks = min(tfidf_dense.shape) - 1
+
+pca_full = PCA(n_components=n_komponen_maks, random_state=42)
+pca_full.fit(tfidf_dense)
+
+variansi_kumulatif = np.cumsum(pca_full.explained_variance_ratio_)
+
+plt.figure(figsize=(8, 5))
+plt.plot(range(1, len(variansi_kumulatif) + 1), variansi_kumulatif, marker='o', markersize=3)
+plt.axhline(y=0.95, color='red', linestyle='--', label='Ambang 95% varians')
+plt.xlabel('Jumlah Komponen Utama (Principal Components)')
+plt.ylabel('Kumulatif Explained Variance Ratio')
+plt.title('PCA: Kumulatif Varians yang Dijelaskan vs Jumlah Komponen')
+plt.legend()
+plt.grid(alpha=0.3)
+plt.tight_layout()
+plt.show()
+
+# Jumlah komponen minimum agar mempertahankan >= 95% varians
+n_komponen_95 = int(np.argmax(variansi_kumulatif >= 0.95) + 1)
+print(f"Jumlah komponen untuk mempertahankan >= 95% varians: {n_komponen_95} "
+      f"(dari semula {tfidf_dense.shape[1]} fitur/kata unik)")
+
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[5], line 2[0m
+[1;32m      1[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
+[0;32m----> 2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mplt[39;00m
+[1;32m      3[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01msklearn[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdecomposition[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m PCA
+[1;32m      5[0m [38;5;66;03m# PCA bekerja pada matriks dense, sedangkan TF-IDF berbentuk sparse matrix -> ubah ke dense[39;00m
+
+[0;31mModuleNotFoundError[0m: No module named 'matplotlib'
+
