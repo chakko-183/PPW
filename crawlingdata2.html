@@ -1,0 +1,1763 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lanjutan: &#8212; Pencarian &amp; Penambangan Web</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'crawlingdata2';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Crawling Data Detik.com" href="crawlingdata.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Pencarian & Penambangan Web - Home"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Pencarian & Penambangan Web - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to my Pencarian & Penambangan Web
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="pengantar.html">Web Mining</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="crawlingdata.html">Crawling Data Detik.com</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Lanjutan:</a></li>
+
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/chakko-183/PPW" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/chakko-183/PPW/issues/new?title=Issue%20on%20page%20%2Fcrawlingdata2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/crawlingdata2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lanjutan:</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lanjutan:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#tahap-2-text-preprocessing-ekstraksi-fitur-tf-idf-dan-reduksi-dimensi-pca">Tahap 2: Text Preprocessing, Ekstraksi Fitur (TF-IDF), dan Reduksi Dimensi (PCA)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text-preprocessing">1. Text Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-fitur-seluruh-kata-unik-vocabulary">2. Ekstraksi Fitur: Seluruh Kata Unik (Vocabulary)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representasi-tf-idf">3. Representasi TF-IDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-dimensi-dengan-pca">4. Reduksi Dimensi dengan PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan">Ringkasan</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="lanjutan">
+<h1>Lanjutan:<a class="headerlink" href="#lanjutan" title="Link to this heading">#</a></h1>
+<p>Sel kode pertama di bawah ini memuat kembali <code class="docutils literal notranslate"><span class="pre">df_berita</span></code> hasil crawling dari file <code class="docutils literal notranslate"><span class="pre">df_berita_hasil_crawling.csv</span></code> yang disimpan oleh notebook Tahap 1, sehingga notebook ini bisa dijalankan tanpa harus mengulang proses crawling. Jika file CSV tersebut belum ada (misalnya notebook Tahap 1 belum dijalankan), maka digunakan data contoh (dummy) sebagai pengganti agar seluruh alur (Tahap 2 dst.) tetap bisa didemonstrasikan.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">CSV_PATH</span> <span class="o">=</span> <span class="s1">'df_berita_hasil_crawling.csv'</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">CSV_PATH</span><span class="p">):</span>
+    <span class="n">df_berita</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">CSV_PATH</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">'No'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Berhasil memuat df_berita dari '</span><span class="si">{</span><span class="n">CSV_PATH</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"File '</span><span class="si">{</span><span class="n">CSV_PATH</span><span class="si">}</span><span class="s2">' tidak ditemukan -&gt; menggunakan data contoh (dummy)."</span><span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sample_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">SAMPLE_BERITA</span>
+    <span class="n">df_berita</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[{</span><span class="s1">'Judul Berita'</span><span class="p">:</span> <span class="n">j</span><span class="p">,</span> <span class="s1">'Tautan'</span><span class="p">:</span> <span class="n">t</span><span class="p">}</span> <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">SAMPLE_BERITA</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">df_berita</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_berita</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">df_berita</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'No'</span>
+
+<span class="c1"># =========================================================</span>
+<span class="c1"># Kolom 'Kategori' dipakai sebagai TARGET untuk klasifikasi</span>
+<span class="c1"># (mis. di Orange: drag kolom ini ke kotak "Target").</span>
+<span class="c1"># Jika file CSV sudah punya kolom 'Kategori' (hasil crawling asli</span>
+<span class="c1"># dari detik.com, mis. 'health'/'sport'), pakai itu langsung.</span>
+<span class="c1"># Kalau belum ada, baru diekstrak dari segmen pertama URL.</span>
+<span class="c1"># =========================================================</span>
+<span class="k">if</span> <span class="s1">'Kategori'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_berita</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ekstrak_kategori</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">'https?://[^/]+/([^/]+)/'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span> <span class="k">else</span> <span class="s1">'lainnya'</span>
+    <span class="n">df_berita</span><span class="p">[</span><span class="s1">'Kategori'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_berita</span><span class="p">[</span><span class="s1">'Tautan'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">ekstrak_kategori</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah data berita:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_berita</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah kategori unik:"</span><span class="p">,</span> <span class="n">df_berita</span><span class="p">[</span><span class="s1">'Kategori'</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Distribusi kategori:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_berita</span><span class="p">[</span><span class="s1">'Kategori'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<span class="n">df_berita</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Berhasil memuat df_berita dari 'df_berita_hasil_crawling.csv'
+Jumlah data berita: 200
+Jumlah kategori unik: 2
+
+Distribusi kategori:
+Kategori
+health    100
+sport     100
+Name: count, dtype: int64
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Judul Berita</th>
+      <th>Tautan</th>
+      <th>Kategori</th>
+    </tr>
+    <tr>
+      <th>No</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Susul Italia, Denmark Juga Di-lockdown Imbas V...</td>
+      <td>https://health.detik.com/berita-detikhealth/d-...</td>
+      <td>health</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Mungkinkah Virus Corona Aktif Lagi Setelah Pas...</td>
+      <td>https://health.detik.com/berita-detikhealth/d-...</td>
+      <td>health</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Sebaran Kasus Corona RI 9 Juni, 11.414 Sembuh ...</td>
+      <td>https://health.detik.com/berita-detikhealth/d-...</td>
+      <td>health</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Kisah Pasien 03, Buka-bukaan Awal Tertular Vir...</td>
+      <td>https://health.detik.com/berita-detikhealth/d-...</td>
+      <td>health</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>4 Variasi Seks Ketika Penetrasi Biasa Terasa M...</td>
+      <td>https://health.detik.com/sexual-health/d-49477...</td>
+      <td>health</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="tahap-2-text-preprocessing-ekstraksi-fitur-tf-idf-dan-reduksi-dimensi-pca">
+<h1>Tahap 2: Text Preprocessing, Ekstraksi Fitur (TF-IDF), dan Reduksi Dimensi (PCA)<a class="headerlink" href="#tahap-2-text-preprocessing-ekstraksi-fitur-tf-idf-dan-reduksi-dimensi-pca" title="Link to this heading">#</a></h1>
+<p>Setelah data berita berhasil di-<em>crawl</em> pada tahap sebelumnya (<code class="docutils literal notranslate"><span class="pre">df_berita</span></code>), tahap selanjutnya adalah:</p>
+<ol class="arabic simple">
+<li><p><strong>Preprocessing</strong> teks judul berita (cleaning, case folding, tokenizing, stopword removal, stemming).</p></li>
+<li><p><strong>Ekstraksi fitur</strong>, yaitu membangun kosakata (seluruh kata unik) dari korpus hasil preprocessing.</p></li>
+<li><p><strong>Representasi TF-IDF</strong>, mengubah setiap dokumen (judul berita) menjadi vektor numerik berbobot TF-IDF.</p></li>
+<li><p><strong>Reduksi dimensi</strong> matriks TF-IDF menggunakan <strong>PCA (Principal Component Analysis)</strong> agar bisa divisualisasikan dan dianalisis lebih lanjut.</p></li>
+</ol>
+<section id="text-preprocessing">
+<h2>1. Text Preprocessing<a class="headerlink" href="#text-preprocessing" title="Link to this heading">#</a></h2>
+<p>Tahapan pembersihan teks yang dilakukan pada setiap judul berita:</p>
+<ul class="simple">
+<li><p><strong>Case folding</strong>: mengubah seluruh teks menjadi huruf kecil.</p></li>
+<li><p><strong>Cleaning</strong>: menghapus angka, tanda baca, dan karakter selain huruf.</p></li>
+<li><p><strong>Tokenizing</strong>: memecah kalimat menjadi kata-kata (token).</p></li>
+<li><p><strong>Stopword removal</strong>: membuang kata-kata umum Bahasa Indonesia yang tidak informatif (contoh: <em>yang, di, dan, untuk</em>).</p></li>
+<li><p><strong>Stemming</strong>: mengubah kata berimbuhan menjadi kata dasar (menggunakan <strong>Sastrawi</strong>, library stemmer Bahasa Indonesia paling umum digunakan). Jika library belum terpasang, jalankan <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">Sastrawi</span></code> terlebih dahulu.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install Sastrawi jika belum tersedia (khusus stemming Bahasa Indonesia)</span>
+<span class="c1"># Jalankan baris di bawah ini sekali saja jika belum pernah diinstall</span>
+<span class="c1"># !pip install Sastrawi</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># --- Daftar stopword Bahasa Indonesia ---</span>
+<span class="c1"># Diutamakan menggunakan stopword bawaan Sastrawi (lebih lengkap &amp; terpercaya).</span>
+<span class="c1"># Jika Sastrawi belum terpasang, dipakai daftar stopword manual sebagai fallback.</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">Sastrawi.StopWordRemover.StopWordRemoverFactory</span><span class="w"> </span><span class="kn">import</span> <span class="n">StopWordRemoverFactory</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">Sastrawi.Stemmer.StemmerFactory</span><span class="w"> </span><span class="kn">import</span> <span class="n">StemmerFactory</span>
+
+    <span class="n">stopword_factory</span> <span class="o">=</span> <span class="n">StopWordRemoverFactory</span><span class="p">()</span>
+    <span class="n">daftar_stopword</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopword_factory</span><span class="o">.</span><span class="n">get_stop_words</span><span class="p">())</span>
+
+    <span class="n">stemmer_factory</span> <span class="o">=</span> <span class="n">StemmerFactory</span><span class="p">()</span>
+    <span class="n">stemmer</span> <span class="o">=</span> <span class="n">stemmer_factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
+
+    <span class="n">SASTRAWI_TERSEDIA</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Sastrawi berhasil dimuat. Stopword removal &amp; stemming menggunakan Sastrawi."</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">SASTRAWI_TERSEDIA</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># Fallback stemmer sederhana (rule-based) jika Sastrawi belum terpasang.</span>
+    <span class="c1"># Tidak seakurat Sastrawi, namun tetap mampu memotong imbuhan umum</span>
+    <span class="c1"># Bahasa Indonesia (awalan &amp; akhiran) agar kata mendekati bentuk dasarnya.</span>
+    <span class="n">_PREFIXES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'meng'</span><span class="p">,</span> <span class="s1">'meny'</span><span class="p">,</span> <span class="s1">'men'</span><span class="p">,</span> <span class="s1">'mem'</span><span class="p">,</span> <span class="s1">'me'</span><span class="p">,</span> <span class="s1">'peng'</span><span class="p">,</span> <span class="s1">'peny'</span><span class="p">,</span> <span class="s1">'pen'</span><span class="p">,</span> <span class="s1">'pem'</span><span class="p">,</span> <span class="s1">'pe'</span><span class="p">,</span>
+                 <span class="s1">'ber'</span><span class="p">,</span> <span class="s1">'ter'</span><span class="p">,</span> <span class="s1">'di'</span><span class="p">,</span> <span class="s1">'ke'</span><span class="p">,</span> <span class="s1">'se'</span><span class="p">]</span>
+    <span class="n">_SUFFIXES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'kan'</span><span class="p">,</span> <span class="s1">'an'</span><span class="p">,</span> <span class="s1">'i'</span><span class="p">,</span> <span class="s1">'nya'</span><span class="p">,</span> <span class="s1">'lah'</span><span class="p">,</span> <span class="s1">'kah'</span><span class="p">,</span> <span class="s1">'ku'</span><span class="p">,</span> <span class="s1">'mu'</span><span class="p">]</span>
+
+    <span class="k">class</span><span class="w"> </span><span class="nc">SimpleStemmer</span><span class="p">:</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">stem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kata</span><span class="p">):</span>
+            <span class="n">asal</span> <span class="o">=</span> <span class="n">kata</span>
+            <span class="k">for</span> <span class="n">sfx</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_SUFFIXES</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">kata</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">sfx</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">kata</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">sfx</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">kata</span> <span class="o">=</span> <span class="n">kata</span><span class="p">[:</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">sfx</span><span class="p">)]</span>
+                    <span class="k">break</span>
+            <span class="k">for</span> <span class="n">pfx</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_PREFIXES</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">kata</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">pfx</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">kata</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">pfx</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">kata</span> <span class="o">=</span> <span class="n">kata</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">pfx</span><span class="p">):]</span>
+                    <span class="k">break</span>
+            <span class="k">return</span> <span class="n">kata</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kata</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span> <span class="k">else</span> <span class="n">asal</span>
+
+    <span class="n">stemmer</span> <span class="o">=</span> <span class="n">SimpleStemmer</span><span class="p">()</span>
+
+    <span class="c1"># Fallback: daftar stopword Bahasa Indonesia dasar</span>
+    <span class="n">daftar_stopword</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s2">"""</span>
+<span class="s2">    yang untuk pada ke para namun menurut antara dia dua ia seperti jika jika sehingga kembali dan</span>
+<span class="s2">    tidak ini karena kepada oleh saat harus sementara setelah belum kami sekitar bagi serta di dari</span>
+<span class="s2">    dalam akan bahwa juga atau itu adalah dengan sebagai secara ada saja sudah dapat telah bisa</span>
+<span class="s2">    tersebut namun hal sebuah suatu masih agar lebih tak kata orang ya jadi cara satu tahun apa</span>
+<span class="s2">    para hingga sebagai sebelum bagaimana pun terhadap sedang sekali beberapa terkait bahkan sampai</span>
+<span class="s2">    banyak lagi juga hanya per soal maupun mereka kita kamu saya anda dirinya mengapa</span>
+<span class="s2">    """</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Sastrawi tidak ditemukan -&gt; menggunakan stopword manual &amp; stemmer sederhana (fallback)."</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Untuk hasil stemming yang lebih akurat, install dengan: pip install Sastrawi"</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">preprocessing_teks</span><span class="p">(</span><span class="n">teks</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Pipeline preprocessing teks Bahasa Indonesia:</span>
+<span class="sd">    case folding -&gt; cleaning -&gt; tokenizing -&gt; stopword removal -&gt; stemming</span>
+<span class="sd">    Mengembalikan teks bersih dalam bentuk string (token dipisah spasi).</span>
+<span class="sd">    """</span>
+    <span class="c1"># 1. Case folding</span>
+    <span class="n">teks</span> <span class="o">=</span> <span class="n">teks</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="c1"># 2. Cleaning: hapus URL (jika ada), angka, dan tanda baca/karakter non-huruf</span>
+    <span class="n">teks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'http\S+|www\.\S+'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">teks</span><span class="p">)</span>
+    <span class="n">teks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'[^a-z\s]'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">teks</span><span class="p">)</span>
+    <span class="n">teks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\s+'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">teks</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="c1"># 3. Tokenizing</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">teks</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+    <span class="c1"># 4. Stopword removal + buang token yang terlalu pendek (1 huruf)</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">daftar_stopword</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># 5. Stemming (Sastrawi jika tersedia, atau stemmer sederhana sebagai fallback)</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+
+<span class="c1"># Terapkan preprocessing ke seluruh judul berita hasil crawling</span>
+<span class="n">df_berita</span><span class="p">[</span><span class="s1">'teks_bersih'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_berita</span><span class="p">[</span><span class="s1">'Judul Berita'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">preprocessing_teks</span><span class="p">)</span>
+
+<span class="c1"># Buang baris yang menjadi kosong setelah preprocessing (jika ada)</span>
+<span class="n">df_berita</span> <span class="o">=</span> <span class="n">df_berita</span><span class="p">[</span><span class="n">df_berita</span><span class="p">[</span><span class="s1">'teks_bersih'</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah dokumen setelah preprocessing:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_berita</span><span class="p">))</span>
+<span class="n">df_berita</span><span class="p">[[</span><span class="s1">'Judul Berita'</span><span class="p">,</span> <span class="s1">'teks_bersih'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sastrawi berhasil dimuat. Stopword removal &amp; stemming menggunakan Sastrawi.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah dokumen setelah preprocessing: 200
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Judul Berita</th>
+      <th>teks_bersih</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Susul Italia, Denmark Juga Di-lockdown Imbas V...</td>
+      <td>susul italia denmark lockdown imbas virus corona</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mungkinkah Virus Corona Aktif Lagi Setelah Pas...</td>
+      <td>mungkin virus corona aktif pasien nyata sembuh</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Sebaran Kasus Corona RI 9 Juni, 11.414 Sembuh ...</td>
+      <td>sebar kasus corona ri juni sembuh tinggal</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Kisah Pasien 03, Buka-bukaan Awal Tertular Vir...</td>
+      <td>kisah pasien buka buka awal tular virus corona...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4 Variasi Seks Ketika Penetrasi Biasa Terasa M...</td>
+      <td>variasi seks penetrasi biasa asa siksa</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Ibu dan Anak Berhasil Melarikan Diri dari Pusa...</td>
+      <td>ibu anak hasil lari diri pusat wabah virus corona</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Pria Ini Bikin Sendiri Hazmat 'Anti Corona' da...</td>
+      <td>pria bikin sendiri hazmat anti corona kantong ...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Berapa Lama Virus Corona Bertahan di Dalam Tubuh?</td>
+      <td>berapa lama virus corona tahan tubuh</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Plus-Minus dan Hal Penting Lain Soal Masker Ka...</td>
+      <td>plus minus penting soal masker kain kini wajib...</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Viral Tegal Pesta Kembang Api, Berakhirnya PSB...</td>
+      <td>viral tegal pesta kembang api akhir psbb bukan...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="ekstraksi-fitur-seluruh-kata-unik-vocabulary">
+<h2>2. Ekstraksi Fitur: Seluruh Kata Unik (Vocabulary)<a class="headerlink" href="#ekstraksi-fitur-seluruh-kata-unik-vocabulary" title="Link to this heading">#</a></h2>
+<p>Setelah teks bersih, langkah selanjutnya adalah <strong>mengekstrak seluruh kata unik (fitur)</strong> dari korpus. Vocabulary inilah yang nantinya menjadi dasar dimensi/kolom pada representasi TF-IDF, sehingga kedua tahap ini konsisten menggunakan kosakata yang sama.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="n">corpus</span> <span class="o">=</span> <span class="n">df_berita</span><span class="p">[</span><span class="s1">'teks_bersih'</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="c1"># Gunakan CountVectorizer hanya untuk mengekstrak vocabulary (kata unik) dari korpus</span>
+<span class="n">vectorizer_vocab</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+<span class="n">vectorizer_vocab</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+
+<span class="n">vocabulary</span> <span class="o">=</span> <span class="n">vectorizer_vocab</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah dokumen (korpus):"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah seluruh kata unik (ukuran vocabulary):"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">))</span>
+
+<span class="n">df_vocab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">'Kata Unik'</span><span class="p">:</span> <span class="n">vocabulary</span><span class="p">})</span>
+<span class="n">df_vocab</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_vocab</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">df_vocab</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'No'</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">========== 10 KATA UNIK PERTAMA (hasil preprocessing) =========="</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_vocab</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">========== 10 KATA UNIK TERAKHIR (hasil preprocessing) =========="</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_vocab</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah dokumen (korpus): 200
+Jumlah seluruh kata unik (ukuran vocabulary): 807
+
+========== 10 KATA UNIK PERTAMA (hasil preprocessing) ==========
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kata Unik</th>
+    </tr>
+    <tr>
+      <th>No</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>ac</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ad</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ade</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>adu</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ahli</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ahsan</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>air</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>ajak</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>akhir</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>akibat</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>========== 10 KATA UNIK TERAKHIR (hasil preprocessing) ==========
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kata Unik</th>
+    </tr>
+    <tr>
+      <th>No</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>798</th>
+      <td>wild</td>
+    </tr>
+    <tr>
+      <th>799</th>
+      <td>wn</td>
+    </tr>
+    <tr>
+      <th>800</th>
+      <td>wni</td>
+    </tr>
+    <tr>
+      <th>801</th>
+      <td>wuhan</td>
+    </tr>
+    <tr>
+      <th>802</th>
+      <td>yakin</td>
+    </tr>
+    <tr>
+      <th>803</th>
+      <td>yamaha</td>
+    </tr>
+    <tr>
+      <th>804</th>
+      <td>york</td>
+    </tr>
+    <tr>
+      <th>805</th>
+      <td>zat</td>
+    </tr>
+    <tr>
+      <th>806</th>
+      <td>zlatan</td>
+    </tr>
+    <tr>
+      <th>807</th>
+      <td>zohri</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="representasi-tf-idf">
+<h2>3. Representasi TF-IDF<a class="headerlink" href="#representasi-tf-idf" title="Link to this heading">#</a></h2>
+<p>Setiap dokumen (judul berita) direpresentasikan sebagai vektor berbobot TF-IDF, menggunakan kosakata (<code class="docutils literal notranslate"><span class="pre">vocabulary</span></code>) yang telah diekstrak pada tahap sebelumnya, sehingga setiap kolom pada matriks TF-IDF berkorespondensi langsung dengan satu kata unik pada tahap ekstraksi fitur.</p>
+<p>Formula: <code class="docutils literal notranslate"><span class="pre">tf_idf(t,</span> <span class="pre">d)</span> <span class="pre">=</span> <span class="pre">tf(t,</span> <span class="pre">d)</span> <span class="pre">x</span> <span class="pre">idf(t)</span></code>, dengan <code class="docutils literal notranslate"><span class="pre">idf(t)</span> <span class="pre">=</span> <span class="pre">log(N</span> <span class="pre">/</span> <span class="pre">df(t))</span> <span class="pre">+</span> <span class="pre">1</span></code> (smoothing default scikit-learn).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+
+<span class="c1"># Gunakan vocabulary yang sama dengan hasil ekstraksi fitur agar kedua tahap konsisten</span>
+<span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">vocabulary</span><span class="o">=</span><span class="n">vocabulary</span><span class="p">)</span>
+<span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Ukuran matriks TF-IDF (dokumen x kata unik):"</span><span class="p">,</span> <span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Sparsity matriks: </span><span class="si">{:.2f}% e</span><span class="s2">lemen bernilai nol"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">nnz</span> <span class="o">/</span> <span class="p">(</span><span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="p">))</span>
+
+<span class="c1"># Tampilkan sebagian matriks TF-IDF dalam bentuk DataFrame agar mudah dibaca</span>
+<span class="n">df_tfidf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(),</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"Doc </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Contoh 5 dokumen pertama x 10 kata pertama dari matriks TF-IDF:"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_tfidf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,</span> <span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+
+<span class="c1"># Kata dengan bobot TF-IDF rata-rata tertinggi di seluruh korpus (paling "khas")</span>
+<span class="n">top_words</span> <span class="o">=</span> <span class="n">df_tfidf</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">15 kata dengan rata-rata bobot TF-IDF tertinggi (paling khas di korpus):"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">top_words</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ukuran matriks TF-IDF (dokumen x kata unik): (200, 807)
+Sparsity matriks: 99.09% elemen bernilai nol
+
+Contoh 5 dokumen pertama x 10 kata pertama dari matriks TF-IDF:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ac</th>
+      <th>ad</th>
+      <th>ade</th>
+      <th>adu</th>
+      <th>ahli</th>
+      <th>ahsan</th>
+      <th>air</th>
+      <th>ajak</th>
+      <th>akhir</th>
+      <th>akibat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Doc 1</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>Doc 2</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>Doc 3</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>Doc 4</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>Doc 5</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15 kata dengan rata-rata bobot TF-IDF tertinggi (paling khas di korpus):
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>corona       0.057003
+virus        0.036841
+indonesia    0.024314
+tinggal      0.020181
+pasien       0.018338
+sembuh       0.017834
+juara        0.015711
+tak          0.015380
+motogp       0.014715
+gelar        0.014358
+orang        0.013018
+pakai        0.011710
+jadi         0.011346
+tahun        0.010922
+lorenzo      0.010781
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="reduksi-dimensi-dengan-pca">
+<h2>4. Reduksi Dimensi dengan PCA<a class="headerlink" href="#reduksi-dimensi-dengan-pca" title="Link to this heading">#</a></h2>
+<p>Matriks TF-IDF berdimensi tinggi dan <em>sparse</em> (karena jumlah kata unik bisa mencapai ratusan/ribuan). <strong>PCA (Principal Component Analysis)</strong> digunakan untuk mereduksi dimensi tersebut menjadi beberapa komponen utama yang tetap mempertahankan varians (informasi) sebanyak mungkin, sekaligus memudahkan visualisasi dan mempercepat komputasi model selanjutnya.</p>
+<p>Langkah-langkah:</p>
+<ol class="arabic simple">
+<li><p>Analisis <em>explained variance</em> untuk melihat berapa banyak informasi yang dipertahankan pada tiap jumlah komponen.</p></li>
+<li><p>Reduksi ke 2 dimensi untuk keperluan visualisasi sebaran dokumen.</p></li>
+<li><p>(Opsional) Reduksi ke jumlah komponen yang mempertahankan &gt;= 95% varians, untuk dipakai sebagai fitur pada model Machine Learning selanjutnya.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+
+<span class="c1"># PCA bekerja pada matriks dense, sedangkan TF-IDF berbentuk sparse matrix -&gt; ubah ke dense</span>
+<span class="n">tfidf_dense</span> <span class="o">=</span> <span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+
+<span class="c1"># --- 4.1 Analisis Explained Variance ---</span>
+<span class="c1"># Jumlah komponen maksimum dibatasi oleh min(jumlah dokumen, jumlah fitur)</span>
+<span class="n">n_komponen_maks</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">tfidf_dense</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="n">pca_full</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_komponen_maks</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">pca_full</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tfidf_dense</span><span class="p">)</span>
+
+<span class="n">variansi_kumulatif</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">pca_full</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">variansi_kumulatif</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">variansi_kumulatif</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Ambang 95% varians'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Jumlah Komponen Utama (Principal Components)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Kumulatif Explained Variance Ratio'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'PCA: Kumulatif Varians yang Dijelaskan vs Jumlah Komponen'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Jumlah komponen minimum agar mempertahankan &gt;= 95% varians</span>
+<span class="n">n_komponen_95</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">variansi_kumulatif</span> <span class="o">&gt;=</span> <span class="mf">0.95</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Jumlah komponen untuk mempertahankan &gt;= 95% varians: </span><span class="si">{</span><span class="n">n_komponen_95</span><span class="si">}</span><span class="s2"> "</span>
+      <span class="sa">f</span><span class="s2">"(dari semula </span><span class="si">{</span><span class="n">tfidf_dense</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> fitur/kata unik)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/00214fc58ca6d62ba03c171153bef99b3eebdae3006f40eaba4cd597d144a08b.png" src="_images/00214fc58ca6d62ba03c171153bef99b3eebdae3006f40eaba4cd597d144a08b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah komponen untuk mempertahankan &gt;= 95% varians: 175 (dari semula 807 fitur/kata unik)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 4.2 Reduksi ke 2 Dimensi untuk Visualisasi ---</span>
+<span class="n">pca_2d</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">tfidf_pca_2d</span> <span class="o">=</span> <span class="n">pca_2d</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf_dense</span><span class="p">)</span>
+
+<span class="n">df_pca_2d</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tfidf_pca_2d</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'PC1'</span><span class="p">,</span> <span class="s1">'PC2'</span><span class="p">])</span>
+<span class="n">df_pca_2d</span><span class="p">[</span><span class="s1">'Judul Berita'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_berita</span><span class="p">[</span><span class="s1">'Judul Berita'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Total varians yang dijelaskan oleh 2 komponen pertama: </span><span class="si">{:.2f}</span><span class="s2">%"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="mi">100</span> <span class="o">*</span> <span class="n">pca_2d</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_pca_2d</span><span class="p">[</span><span class="s1">'PC1'</span><span class="p">],</span> <span class="n">df_pca_2d</span><span class="p">[</span><span class="s1">'PC2'</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Principal Component 1 (</span><span class="si">{</span><span class="n">pca_2d</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">% varians)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Principal Component 2 (</span><span class="si">{</span><span class="n">pca_2d</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">% varians)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Visualisasi Dokumen Berita Setelah Reduksi Dimensi TF-IDF dengan PCA (2D)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">df_pca_2d</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total varians yang dijelaskan oleh 2 komponen pertama: 3.26%
+</pre></div>
+</div>
+<img alt="_images/c8e8ab0e25934b968ad7ea7d14144324289c6baef93585d6b9b95330ed335602.png" src="_images/c8e8ab0e25934b968ad7ea7d14144324289c6baef93585d6b9b95330ed335602.png" />
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PC1</th>
+      <th>PC2</th>
+      <th>Judul Berita</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.181585</td>
+      <td>-0.125541</td>
+      <td>Susul Italia, Denmark Juga Di-lockdown Imbas V...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.419825</td>
+      <td>-0.067537</td>
+      <td>Mungkinkah Virus Corona Aktif Lagi Setelah Pas...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.355429</td>
+      <td>0.255765</td>
+      <td>Sebaran Kasus Corona RI 9 Juni, 11.414 Sembuh ...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.338734</td>
+      <td>-0.140722</td>
+      <td>Kisah Pasien 03, Buka-bukaan Awal Tertular Vir...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.080842</td>
+      <td>-0.030722</td>
+      <td>4 Variasi Seks Ketika Penetrasi Biasa Terasa M...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.108490</td>
+      <td>-0.036110</td>
+      <td>Ibu dan Anak Berhasil Melarikan Diri dari Pusa...</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.002036</td>
+      <td>-0.038533</td>
+      <td>Pria Ini Bikin Sendiri Hazmat 'Anti Corona' da...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.179923</td>
+      <td>-0.054069</td>
+      <td>Berapa Lama Virus Corona Bertahan di Dalam Tubuh?</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>-0.090114</td>
+      <td>-0.129994</td>
+      <td>Plus-Minus dan Hal Penting Lain Soal Masker Ka...</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.006050</td>
+      <td>-0.046072</td>
+      <td>Viral Tegal Pesta Kembang Api, Berakhirnya PSB...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 4.3 (Opsional) Reduksi ke n komponen yang mempertahankan &gt;= 95% varians ---</span>
+<span class="c1"># Fitur hasil reduksi ini yang biasanya dipakai sebagai input model ML selanjutnya</span>
+<span class="c1"># (misalnya clustering atau klasifikasi berita), karena dimensinya jauh lebih kecil</span>
+<span class="c1"># dibanding matriks TF-IDF asli namun tetap mempertahankan sebagian besar informasi.</span>
+
+<span class="n">pca_final</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_komponen_95</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">tfidf_pca_final</span> <span class="o">=</span> <span class="n">pca_final</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf_dense</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Dimensi TF-IDF sebelum PCA :"</span><span class="p">,</span> <span class="n">tfidf_dense</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Dimensi setelah PCA        :"</span><span class="p">,</span> <span class="n">tfidf_pca_final</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Total varians dipertahankan: </span><span class="si">{:.2f}</span><span class="s2">%"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="mi">100</span> <span class="o">*</span> <span class="n">pca_final</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">))</span>
+
+<span class="n">df_pca_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">tfidf_pca_final</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">'PC</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">'</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tfidf_pca_final</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])],</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"Doc </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tfidf_pca_final</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+<span class="p">)</span>
+<span class="n">df_pca_final</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dimensi TF-IDF sebelum PCA : (200, 807)
+Dimensi setelah PCA        : (200, 175)
+Total varians dipertahankan: 95.13%
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PC1</th>
+      <th>PC2</th>
+      <th>PC3</th>
+      <th>PC4</th>
+      <th>PC5</th>
+      <th>PC6</th>
+      <th>PC7</th>
+      <th>PC8</th>
+      <th>PC9</th>
+      <th>PC10</th>
+      <th>...</th>
+      <th>PC166</th>
+      <th>PC167</th>
+      <th>PC168</th>
+      <th>PC169</th>
+      <th>PC170</th>
+      <th>PC171</th>
+      <th>PC172</th>
+      <th>PC173</th>
+      <th>PC174</th>
+      <th>PC175</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Doc 1</th>
+      <td>0.181580</td>
+      <td>-0.143775</td>
+      <td>0.016002</td>
+      <td>-0.139873</td>
+      <td>-0.164245</td>
+      <td>-0.078918</td>
+      <td>0.003980</td>
+      <td>0.046092</td>
+      <td>-0.064632</td>
+      <td>0.046781</td>
+      <td>...</td>
+      <td>0.029427</td>
+      <td>0.080115</td>
+      <td>0.000486</td>
+      <td>-0.006320</td>
+      <td>0.004574</td>
+      <td>0.009167</td>
+      <td>-0.016188</td>
+      <td>0.009265</td>
+      <td>0.008265</td>
+      <td>0.033748</td>
+    </tr>
+    <tr>
+      <th>Doc 2</th>
+      <td>0.419945</td>
+      <td>-0.046687</td>
+      <td>0.207633</td>
+      <td>0.179555</td>
+      <td>0.147249</td>
+      <td>-0.072524</td>
+      <td>0.182054</td>
+      <td>0.018448</td>
+      <td>0.100322</td>
+      <td>-0.049064</td>
+      <td>...</td>
+      <td>-0.087555</td>
+      <td>0.032028</td>
+      <td>-0.080916</td>
+      <td>-0.071948</td>
+      <td>-0.071504</td>
+      <td>0.026428</td>
+      <td>0.078856</td>
+      <td>0.044614</td>
+      <td>-0.034464</td>
+      <td>-0.102696</td>
+    </tr>
+    <tr>
+      <th>Doc 3</th>
+      <td>0.355289</td>
+      <td>0.267141</td>
+      <td>-0.081571</td>
+      <td>0.221291</td>
+      <td>-0.010260</td>
+      <td>0.074131</td>
+      <td>-0.067540</td>
+      <td>-0.118805</td>
+      <td>0.018055</td>
+      <td>0.257378</td>
+      <td>...</td>
+      <td>-0.058919</td>
+      <td>-0.002154</td>
+      <td>-0.014484</td>
+      <td>0.075737</td>
+      <td>-0.121734</td>
+      <td>0.046789</td>
+      <td>0.109392</td>
+      <td>0.047388</td>
+      <td>-0.002684</td>
+      <td>-0.026939</td>
+    </tr>
+    <tr>
+      <th>Doc 4</th>
+      <td>0.338922</td>
+      <td>-0.124948</td>
+      <td>0.159529</td>
+      <td>0.166934</td>
+      <td>0.170132</td>
+      <td>-0.072561</td>
+      <td>0.087893</td>
+      <td>-0.128389</td>
+      <td>-0.016212</td>
+      <td>-0.140891</td>
+      <td>...</td>
+      <td>-0.081251</td>
+      <td>0.020193</td>
+      <td>0.034961</td>
+      <td>0.038252</td>
+      <td>0.075923</td>
+      <td>-0.036534</td>
+      <td>-0.101249</td>
+      <td>-0.002569</td>
+      <td>0.054299</td>
+      <td>0.105781</td>
+    </tr>
+    <tr>
+      <th>Doc 5</th>
+      <td>-0.080800</td>
+      <td>-0.029854</td>
+      <td>-0.042677</td>
+      <td>0.028631</td>
+      <td>0.022283</td>
+      <td>-0.012546</td>
+      <td>-0.027093</td>
+      <td>-0.068512</td>
+      <td>-0.016757</td>
+      <td>-0.017505</td>
+      <td>...</td>
+      <td>-0.024342</td>
+      <td>0.003823</td>
+      <td>-0.025286</td>
+      <td>0.007800</td>
+      <td>-0.010627</td>
+      <td>0.017483</td>
+      <td>0.011703</td>
+      <td>-0.011754</td>
+      <td>0.017314</td>
+      <td>0.019116</td>
+    </tr>
+    <tr>
+      <th>Doc 6</th>
+      <td>0.108316</td>
+      <td>-0.037031</td>
+      <td>0.011882</td>
+      <td>-0.108332</td>
+      <td>-0.121248</td>
+      <td>0.049336</td>
+      <td>0.017352</td>
+      <td>0.011375</td>
+      <td>-0.016012</td>
+      <td>-0.110030</td>
+      <td>...</td>
+      <td>0.076844</td>
+      <td>-0.008175</td>
+      <td>-0.059731</td>
+      <td>-0.074735</td>
+      <td>-0.088703</td>
+      <td>-0.059372</td>
+      <td>-0.065028</td>
+      <td>0.018771</td>
+      <td>0.010140</td>
+      <td>-0.111991</td>
+    </tr>
+    <tr>
+      <th>Doc 7</th>
+      <td>0.001874</td>
+      <td>-0.043872</td>
+      <td>-0.078732</td>
+      <td>0.000305</td>
+      <td>-0.007157</td>
+      <td>0.045249</td>
+      <td>-0.038302</td>
+      <td>-0.054402</td>
+      <td>0.008941</td>
+      <td>0.000849</td>
+      <td>...</td>
+      <td>0.045584</td>
+      <td>-0.002879</td>
+      <td>-0.052331</td>
+      <td>-0.047525</td>
+      <td>0.008483</td>
+      <td>-0.008309</td>
+      <td>0.010990</td>
+      <td>-0.028030</td>
+      <td>-0.017631</td>
+      <td>-0.033773</td>
+    </tr>
+    <tr>
+      <th>Doc 8</th>
+      <td>0.179472</td>
+      <td>-0.030517</td>
+      <td>-0.003591</td>
+      <td>-0.213622</td>
+      <td>-0.209473</td>
+      <td>-0.039668</td>
+      <td>-0.038133</td>
+      <td>0.043884</td>
+      <td>0.143372</td>
+      <td>-0.161739</td>
+      <td>...</td>
+      <td>0.024162</td>
+      <td>-0.044875</td>
+      <td>0.067331</td>
+      <td>-0.037708</td>
+      <td>0.011109</td>
+      <td>-0.015094</td>
+      <td>0.001543</td>
+      <td>0.090470</td>
+      <td>0.010685</td>
+      <td>0.119232</td>
+    </tr>
+    <tr>
+      <th>Doc 9</th>
+      <td>-0.089413</td>
+      <td>-0.168570</td>
+      <td>-0.062883</td>
+      <td>0.076861</td>
+      <td>-0.066562</td>
+      <td>0.381741</td>
+      <td>0.117365</td>
+      <td>0.296442</td>
+      <td>-0.051698</td>
+      <td>-0.030169</td>
+      <td>...</td>
+      <td>-0.018836</td>
+      <td>-0.002245</td>
+      <td>0.003351</td>
+      <td>-0.110114</td>
+      <td>-0.022962</td>
+      <td>0.077323</td>
+      <td>-0.071242</td>
+      <td>0.078610</td>
+      <td>-0.129549</td>
+      <td>-0.079659</td>
+    </tr>
+    <tr>
+      <th>Doc 10</th>
+      <td>0.005648</td>
+      <td>-0.048091</td>
+      <td>-0.073568</td>
+      <td>-0.002746</td>
+      <td>-0.006883</td>
+      <td>-0.017708</td>
+      <td>-0.029336</td>
+      <td>-0.041286</td>
+      <td>0.033191</td>
+      <td>-0.048103</td>
+      <td>...</td>
+      <td>-0.001260</td>
+      <td>-0.031623</td>
+      <td>-0.000434</td>
+      <td>0.054582</td>
+      <td>-0.016871</td>
+      <td>-0.004733</td>
+      <td>-0.011376</td>
+      <td>-0.031183</td>
+      <td>0.021950</td>
+      <td>-0.015616</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 175 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================================</span>
+<span class="c1"># Menyimpan hasil ke CSV: (1) TF-IDF asli, (2) TF-IDF tereduksi PCA, (3) hasil PCA lengkap</span>
+<span class="c1"># Kolom 'Kategori' disertakan sebagai TARGET (label kelas) untuk keperluan</span>
+<span class="c1"># klasifikasi (mis. di Orange: drag kolom ini ke kotak "Target").</span>
+<span class="c1"># =========================================================</span>
+
+<span class="c1"># 1. Matriks TF-IDF asli (dokumen x kata unik) + judul berita &amp; kategori sebagai referensi</span>
+<span class="n">df_tfidf_export</span> <span class="o">=</span> <span class="n">df_tfidf</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_tfidf_export</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'Kategori'</span><span class="p">,</span> <span class="n">df_berita</span><span class="p">[</span><span class="s1">'Kategori'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">df_tfidf_export</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'Judul Berita'</span><span class="p">,</span> <span class="n">df_berita</span><span class="p">[</span><span class="s1">'Judul Berita'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">df_tfidf_export</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'tfidf_hasil.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Tersimpan: 'tfidf_hasil.csv' -&gt;"</span><span class="p">,</span> <span class="n">df_tfidf_export</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># 2. TF-IDF yang SUDAH DIREDUKSI dengan PCA (n_komponen_95, mempertahankan &gt;=95% varians)</span>
+<span class="n">df_tfidf_reduksi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">tfidf_pca_final</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">'PC</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">'</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tfidf_pca_final</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+<span class="p">)</span>
+<span class="n">df_tfidf_reduksi</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'Kategori'</span><span class="p">,</span> <span class="n">df_berita</span><span class="p">[</span><span class="s1">'Kategori'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">df_tfidf_reduksi</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'Judul Berita'</span><span class="p">,</span> <span class="n">df_berita</span><span class="p">[</span><span class="s1">'Judul Berita'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">df_tfidf_reduksi</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'tfidf_tereduksi_pca.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Tersimpan: 'tfidf_tereduksi_pca.csv' -&gt;"</span><span class="p">,</span> <span class="n">df_tfidf_reduksi</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+      <span class="sa">f</span><span class="s2">"(dari semula </span><span class="si">{</span><span class="n">tfidf_dense</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> kolom TF-IDF menjadi </span><span class="si">{</span><span class="n">tfidf_pca_final</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> kolom PCA)"</span><span class="p">)</span>
+
+<span class="c1"># 3. Hasil PCA lengkap (versi final 95% varians + kolom PC1/PC2 dari versi 2D untuk plotting)</span>
+<span class="n">df_pca_export</span> <span class="o">=</span> <span class="n">df_pca_final</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_pca_export</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'Kategori'</span><span class="p">,</span> <span class="n">df_berita</span><span class="p">[</span><span class="s1">'Kategori'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">df_pca_export</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'Judul Berita'</span><span class="p">,</span> <span class="n">df_berita</span><span class="p">[</span><span class="s1">'Judul Berita'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">df_pca_export</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">'PC1_2D'</span><span class="p">,</span> <span class="n">df_pca_2d</span><span class="p">[</span><span class="s1">'PC1'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">df_pca_export</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">'PC2_2D'</span><span class="p">,</span> <span class="n">df_pca_2d</span><span class="p">[</span><span class="s1">'PC2'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">df_pca_export</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'pca_hasil.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Tersimpan: 'pca_hasil.csv'   -&gt;"</span><span class="p">,</span> <span class="n">df_pca_export</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tersimpan: 'tfidf_hasil.csv' -&gt; (200, 809)
+Tersimpan: 'tfidf_tereduksi_pca.csv' -&gt; (200, 177) (dari semula 807 kolom TF-IDF menjadi 175 kolom PCA)
+Tersimpan: 'pca_hasil.csv'   -&gt; (200, 179)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ringkasan">
+<h2>Ringkasan<a class="headerlink" href="#ringkasan" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Tahap</p></th>
+<th class="head"><p>Input</p></th>
+<th class="head"><p>Output</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Crawling</p></td>
+<td><p>Halaman web Detik Health</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">df_berita</span></code> (Judul Berita, Tautan)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Preprocessing</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">df_berita['Judul</span> <span class="pre">Berita']</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">df_berita['teks_bersih']</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Ekstraksi Fitur</p></td>
+<td><p>Korpus teks bersih</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">vocabulary</span></code> (seluruh kata unik)</p></td>
+</tr>
+<tr class="row-odd"><td><p>TF-IDF</p></td>
+<td><p>Korpus + vocabulary</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tfidf_matrix</span></code> (dokumen x kata unik)</p></td>
+</tr>
+<tr class="row-even"><td><p>PCA</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tfidf_matrix</span></code></p></td>
+<td><p>Matriks berdimensi rendah (2D untuk visualisasi, atau <em>n</em> komponen untuk mempertahankan &gt;=95% varians)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Dengan pipeline ini, data berita mentah hasil <em>crawling</em> telah berhasil diubah menjadi representasi numerik (TF-IDF) yang siap digunakan untuk tahap lanjutan seperti <em>clustering</em> berita atau klasifikasi topik, dengan dimensi yang telah direduksi menggunakan PCA agar lebih efisien secara komputasi.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="crawlingdata.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Crawling Data Detik.com</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lanjutan:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#tahap-2-text-preprocessing-ekstraksi-fitur-tf-idf-dan-reduksi-dimensi-pca">Tahap 2: Text Preprocessing, Ekstraksi Fitur (TF-IDF), dan Reduksi Dimensi (PCA)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text-preprocessing">1. Text Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-fitur-seluruh-kata-unik-vocabulary">2. Ekstraksi Fitur: Seluruh Kata Unik (Vocabulary)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representasi-tf-idf">3. Representasi TF-IDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-dimensi-dengan-pca">4. Reduksi Dimensi dengan PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan">Ringkasan</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Achmad Sujatmiko Su'ud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
