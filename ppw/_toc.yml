@@ -8,3 +8,6 @@ chapters:
 - file: crawlingdata
   sections:
     - file: crawlingdata2
+- file: skipgram
+  sections:
+    - file: klasifikasi_skipgram
