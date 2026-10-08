@@ -1,0 +1,3189 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Skip-gram (Word2Vec) dengan Gensim — 3 Kalimat + Klasifikasi Naive Bayes &#8212; Pencarian &amp; Penambangan Web</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'skipgram';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Klasifikasi Berita Detik (Hot, Health, Sport) — Vektor Skip-gram + Naive Bayes" href="klasifikasi_skipgram.html" />
+    <link rel="prev" title="Lanjutan:" href="crawlingdata2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Pencarian & Penambangan Web - Home"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Pencarian & Penambangan Web - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to my Pencarian & Penambangan Web
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="pengantar.html">Web Mining</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="crawlingdata.html">Crawling Data Detik.com</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="crawlingdata2.html">Lanjutan:</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Skip-gram (Word2Vec) dengan Gensim — 3 Kalimat + Klasifikasi Naive Bayes</a></li>
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/chakko-183/PPW" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/chakko-183/PPW/issues/new?title=Issue%20on%20page%20%2Fskipgram.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/skipgram.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Skip-gram (Word2Vec) dengan Gensim — 3 Kalimat + Klasifikasi Naive Bayes</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Skip-gram (Word2Vec) dengan Gensim — 3 Kalimat + Klasifikasi Naive Bayes</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">1. Import Library</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#menyiapkan-3-kalimat-berbeda">2. Menyiapkan 3 Kalimat Berbeda</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-tokenisasi">3. Preprocessing &amp; Tokenisasi</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pasangan-kata-skip-gram-word-pairs">4. Pasangan Kata (Skip-gram Word Pairs)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#melatih-model-skip-gram-dengan-gensim">5. Melatih Model Skip-gram dengan Gensim</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#representasi-vektor-faktor-setiap-kata-per-kalimat">6. Representasi Vektor (Faktor) Setiap Kata per Kalimat</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-ditampilkan-sebagai-tabel-dataframe-per-kalimat">6b. Ditampilkan sebagai Tabel (DataFrame) per Kalimat</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-seluruh-representasi-vektor-ke-csv">7. Menyimpan Seluruh Representasi Vektor ke CSV</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#uji-kualitas-embedding-most-similar">8. Uji Kualitas Embedding (Most Similar)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-jenis-kata-dengan-naive-bayes-fitur-vektor-skip-gram">9. Klasifikasi Jenis Kata dengan Naive Bayes (Fitur: Vektor Skip-gram)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">10. Kesimpulan</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="skip-gram-word2vec-dengan-gensim-3-kalimat-klasifikasi-naive-bayes">
+<h1>Skip-gram (Word2Vec) dengan Gensim — 3 Kalimat + Klasifikasi Naive Bayes<a class="headerlink" href="#skip-gram-word2vec-dengan-gensim-3-kalimat-klasifikasi-naive-bayes" title="Link to this heading">#</a></h1>
+</section>
+<section id="import-library">
+<h1>1. Import Library<a class="headerlink" href="#import-library" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gensim.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Word2Vec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeaveOneOut</span><span class="p">,</span> <span class="n">cross_val_predict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">'display.max_columns'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">'display.width'</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="menyiapkan-3-kalimat-berbeda">
+<h1>2. Menyiapkan 3 Kalimat Berbeda<a class="headerlink" href="#menyiapkan-3-kalimat-berbeda" title="Link to this heading">#</a></h1>
+<p>Ketiga kalimat ini bertema Jaringan Saraf Tiruan (JST), sehingga beberapa kata (misalnya <em>neuron</em>, <em>jaringan</em>, <em>data</em>) muncul berulang di lebih dari satu kalimat — ini penting agar Skip-gram punya cukup konteks untuk mempelajari hubungan antar kata.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kalimat</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"Jaringan saraf tiruan meniru cara kerja otak manusia untuk mengenali pola data"</span><span class="p">,</span>
+    <span class="s2">"Setiap neuron pada jaringan saraf tiruan menerima input lalu menghasilkan output melalui fungsi aktivasi"</span><span class="p">,</span>
+    <span class="s2">"Proses pelatihan jaringan saraf tiruan menggunakan data dalam jumlah besar agar model semakin akurat"</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kalimat</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Kalimat </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kalimat 1: Jaringan saraf tiruan meniru cara kerja otak manusia untuk mengenali pola data
+Kalimat 2: Setiap neuron pada jaringan saraf tiruan menerima input lalu menghasilkan output melalui fungsi aktivasi
+Kalimat 3: Proses pelatihan jaringan saraf tiruan menggunakan data dalam jumlah besar agar model semakin akurat
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="preprocessing-tokenisasi">
+<h1>3. Preprocessing &amp; Tokenisasi<a class="headerlink" href="#preprocessing-tokenisasi" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tokenisasi</span><span class="p">(</span><span class="n">teks</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">teks</span> <span class="o">=</span> <span class="n">teks</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">'[a-zA-Z]+'</span><span class="p">,</span> <span class="n">teks</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tokens</span>
+
+<span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">tokenisasi</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">kalimat</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Kalimat </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">tokens</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">semua_kata</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">w</span> <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">corpus</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Jumlah kata unik (vocabulary) di seluruh korpus: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">semua_kata</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">semua_kata</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kalimat 1 -&gt; ['jaringan', 'saraf', 'tiruan', 'meniru', 'cara', 'kerja', 'otak', 'manusia', 'untuk', 'mengenali', 'pola', 'data']
+Kalimat 2 -&gt; ['setiap', 'neuron', 'pada', 'jaringan', 'saraf', 'tiruan', 'menerima', 'input', 'lalu', 'menghasilkan', 'output', 'melalui', 'fungsi', 'aktivasi']
+Kalimat 3 -&gt; ['proses', 'pelatihan', 'jaringan', 'saraf', 'tiruan', 'menggunakan', 'data', 'dalam', 'jumlah', 'besar', 'agar', 'model', 'semakin', 'akurat']
+
+Jumlah kata unik (vocabulary) di seluruh korpus: 33
+['agar', 'aktivasi', 'akurat', 'besar', 'cara', 'dalam', 'data', 'fungsi', 'input', 'jaringan', 'jumlah', 'kerja', 'lalu', 'manusia', 'melalui', 'menerima', 'mengenali', 'menggunakan', 'menghasilkan', 'meniru', 'model', 'neuron', 'otak', 'output', 'pada', 'pelatihan', 'pola', 'proses', 'saraf', 'semakin', 'setiap', 'tiruan', 'untuk']
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pasangan-kata-skip-gram-word-pairs">
+<h1>4. Pasangan Kata (Skip-gram Word Pairs)<a class="headerlink" href="#pasangan-kata-skip-gram-word-pairs" title="Link to this heading">#</a></h1>
+<p>Skip-gram mengambil 1 kata sebagai <strong>kata target/pusat (center word)</strong>, lalu mencoba memprediksi <strong>kata-kata di sekitarnya (context word)</strong> dalam jangkauan tertentu (<em>window</em>). Untuk setiap kata target, dibentuk <strong>pasangan (target, context)</strong> — pasangan inilah yang menjadi data latih. Di sini pasangan dibuat manual untuk memperlihatkan prosesnya (Gensim melakukan ini otomatis di dalam <code class="docutils literal notranslate"><span class="pre">Word2Vec(sg=1,</span> <span class="pre">window=...)</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">WINDOW</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># jangkauan konteks kiri/kanan, harus sama dengan window model nanti</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">buat_pasangan_skipgram</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">WINDOW</span><span class="p">):</span>
+    <span class="n">pasangan</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+        <span class="n">mulai</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="n">window</span><span class="p">)</span>
+        <span class="n">akhir</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span> <span class="n">i</span> <span class="o">+</span> <span class="n">window</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mulai</span><span class="p">,</span> <span class="n">akhir</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+                <span class="n">pasangan</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">target</span><span class="p">,</span> <span class="n">tokens</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">pasangan</span>
+
+<span class="n">daftar_pasangan</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">pasangan</span> <span class="o">=</span> <span class="n">buat_pasangan_skipgram</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">target</span><span class="p">,</span> <span class="n">context</span> <span class="ow">in</span> <span class="n">pasangan</span><span class="p">:</span>
+        <span class="n">daftar_pasangan</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">'Kalimat_ke'</span><span class="p">:</span> <span class="n">idx</span><span class="p">,</span> <span class="s1">'Kata_Target'</span><span class="p">:</span> <span class="n">target</span><span class="p">,</span> <span class="s1">'Kata_Konteks'</span><span class="p">:</span> <span class="n">context</span><span class="p">})</span>
+
+<span class="n">df_pasangan</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">daftar_pasangan</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total pasangan (target, context) yang terbentuk: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_pasangan</span><span class="p">)</span><span class="si">}</span><span class="s2"> (window=</span><span class="si">{</span><span class="n">WINDOW</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"--- Pasangan kata - Kalimat </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2"> ---"</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">df_pasangan</span><span class="p">[</span><span class="n">df_pasangan</span><span class="p">[</span><span class="s1">'Kalimat_ke'</span><span class="p">]</span> <span class="o">==</span> <span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total pasangan (target, context) yang terbentuk: 142 (window=2)
+
+--- Pasangan kata - Kalimat 1 ---
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kalimat_ke</th>
+      <th>Kata_Target</th>
+      <th>Kata_Konteks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>jaringan</td>
+      <td>saraf</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>jaringan</td>
+      <td>tiruan</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>saraf</td>
+      <td>jaringan</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>saraf</td>
+      <td>tiruan</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>saraf</td>
+      <td>meniru</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>tiruan</td>
+      <td>jaringan</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>tiruan</td>
+      <td>saraf</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1</td>
+      <td>tiruan</td>
+      <td>meniru</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>tiruan</td>
+      <td>cara</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>meniru</td>
+      <td>saraf</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1</td>
+      <td>meniru</td>
+      <td>tiruan</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>meniru</td>
+      <td>cara</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1</td>
+      <td>meniru</td>
+      <td>kerja</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1</td>
+      <td>cara</td>
+      <td>tiruan</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1</td>
+      <td>cara</td>
+      <td>meniru</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1</td>
+      <td>cara</td>
+      <td>kerja</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>1</td>
+      <td>cara</td>
+      <td>otak</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1</td>
+      <td>kerja</td>
+      <td>meniru</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>1</td>
+      <td>kerja</td>
+      <td>cara</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1</td>
+      <td>kerja</td>
+      <td>otak</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>1</td>
+      <td>kerja</td>
+      <td>manusia</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>1</td>
+      <td>otak</td>
+      <td>cara</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1</td>
+      <td>otak</td>
+      <td>kerja</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>1</td>
+      <td>otak</td>
+      <td>manusia</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>1</td>
+      <td>otak</td>
+      <td>untuk</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>1</td>
+      <td>manusia</td>
+      <td>kerja</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>1</td>
+      <td>manusia</td>
+      <td>otak</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>1</td>
+      <td>manusia</td>
+      <td>untuk</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>1</td>
+      <td>manusia</td>
+      <td>mengenali</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>1</td>
+      <td>untuk</td>
+      <td>otak</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>1</td>
+      <td>untuk</td>
+      <td>manusia</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>1</td>
+      <td>untuk</td>
+      <td>mengenali</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>1</td>
+      <td>untuk</td>
+      <td>pola</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>1</td>
+      <td>mengenali</td>
+      <td>manusia</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>1</td>
+      <td>mengenali</td>
+      <td>untuk</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>1</td>
+      <td>mengenali</td>
+      <td>pola</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>1</td>
+      <td>mengenali</td>
+      <td>data</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>1</td>
+      <td>pola</td>
+      <td>untuk</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>1</td>
+      <td>pola</td>
+      <td>mengenali</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>1</td>
+      <td>pola</td>
+      <td>data</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>1</td>
+      <td>data</td>
+      <td>mengenali</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>1</td>
+      <td>data</td>
+      <td>pola</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Pasangan kata - Kalimat 2 ---
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kalimat_ke</th>
+      <th>Kata_Target</th>
+      <th>Kata_Konteks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>setiap</td>
+      <td>neuron</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>setiap</td>
+      <td>pada</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>neuron</td>
+      <td>setiap</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>neuron</td>
+      <td>pada</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2</td>
+      <td>neuron</td>
+      <td>jaringan</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2</td>
+      <td>pada</td>
+      <td>setiap</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2</td>
+      <td>pada</td>
+      <td>neuron</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2</td>
+      <td>pada</td>
+      <td>jaringan</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2</td>
+      <td>pada</td>
+      <td>saraf</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2</td>
+      <td>jaringan</td>
+      <td>neuron</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2</td>
+      <td>jaringan</td>
+      <td>pada</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2</td>
+      <td>jaringan</td>
+      <td>saraf</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2</td>
+      <td>jaringan</td>
+      <td>tiruan</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2</td>
+      <td>saraf</td>
+      <td>pada</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2</td>
+      <td>saraf</td>
+      <td>jaringan</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2</td>
+      <td>saraf</td>
+      <td>tiruan</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2</td>
+      <td>saraf</td>
+      <td>menerima</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2</td>
+      <td>tiruan</td>
+      <td>jaringan</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2</td>
+      <td>tiruan</td>
+      <td>saraf</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>2</td>
+      <td>tiruan</td>
+      <td>menerima</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>2</td>
+      <td>tiruan</td>
+      <td>input</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>2</td>
+      <td>menerima</td>
+      <td>saraf</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>2</td>
+      <td>menerima</td>
+      <td>tiruan</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>2</td>
+      <td>menerima</td>
+      <td>input</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2</td>
+      <td>menerima</td>
+      <td>lalu</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>2</td>
+      <td>input</td>
+      <td>tiruan</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>2</td>
+      <td>input</td>
+      <td>menerima</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>2</td>
+      <td>input</td>
+      <td>lalu</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>2</td>
+      <td>input</td>
+      <td>menghasilkan</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>2</td>
+      <td>lalu</td>
+      <td>menerima</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>2</td>
+      <td>lalu</td>
+      <td>input</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>2</td>
+      <td>lalu</td>
+      <td>menghasilkan</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>2</td>
+      <td>lalu</td>
+      <td>output</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>2</td>
+      <td>menghasilkan</td>
+      <td>input</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>2</td>
+      <td>menghasilkan</td>
+      <td>lalu</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>2</td>
+      <td>menghasilkan</td>
+      <td>output</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>2</td>
+      <td>menghasilkan</td>
+      <td>melalui</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>2</td>
+      <td>output</td>
+      <td>lalu</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>2</td>
+      <td>output</td>
+      <td>menghasilkan</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>2</td>
+      <td>output</td>
+      <td>melalui</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>2</td>
+      <td>output</td>
+      <td>fungsi</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>2</td>
+      <td>melalui</td>
+      <td>menghasilkan</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>2</td>
+      <td>melalui</td>
+      <td>output</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>2</td>
+      <td>melalui</td>
+      <td>fungsi</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>2</td>
+      <td>melalui</td>
+      <td>aktivasi</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>2</td>
+      <td>fungsi</td>
+      <td>output</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>2</td>
+      <td>fungsi</td>
+      <td>melalui</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>2</td>
+      <td>fungsi</td>
+      <td>aktivasi</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>2</td>
+      <td>aktivasi</td>
+      <td>melalui</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>2</td>
+      <td>aktivasi</td>
+      <td>fungsi</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Pasangan kata - Kalimat 3 ---
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kalimat_ke</th>
+      <th>Kata_Target</th>
+      <th>Kata_Konteks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>proses</td>
+      <td>pelatihan</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>proses</td>
+      <td>jaringan</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>pelatihan</td>
+      <td>proses</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>pelatihan</td>
+      <td>jaringan</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3</td>
+      <td>pelatihan</td>
+      <td>saraf</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3</td>
+      <td>jaringan</td>
+      <td>proses</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>3</td>
+      <td>jaringan</td>
+      <td>pelatihan</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>3</td>
+      <td>jaringan</td>
+      <td>saraf</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>3</td>
+      <td>jaringan</td>
+      <td>tiruan</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>3</td>
+      <td>saraf</td>
+      <td>pelatihan</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>3</td>
+      <td>saraf</td>
+      <td>jaringan</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>3</td>
+      <td>saraf</td>
+      <td>tiruan</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>3</td>
+      <td>saraf</td>
+      <td>menggunakan</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>3</td>
+      <td>tiruan</td>
+      <td>jaringan</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>3</td>
+      <td>tiruan</td>
+      <td>saraf</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>3</td>
+      <td>tiruan</td>
+      <td>menggunakan</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>3</td>
+      <td>tiruan</td>
+      <td>data</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>3</td>
+      <td>menggunakan</td>
+      <td>saraf</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>3</td>
+      <td>menggunakan</td>
+      <td>tiruan</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>3</td>
+      <td>menggunakan</td>
+      <td>data</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>3</td>
+      <td>menggunakan</td>
+      <td>dalam</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>3</td>
+      <td>data</td>
+      <td>tiruan</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>3</td>
+      <td>data</td>
+      <td>menggunakan</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>3</td>
+      <td>data</td>
+      <td>dalam</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>3</td>
+      <td>data</td>
+      <td>jumlah</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>3</td>
+      <td>dalam</td>
+      <td>menggunakan</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>3</td>
+      <td>dalam</td>
+      <td>data</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>3</td>
+      <td>dalam</td>
+      <td>jumlah</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>3</td>
+      <td>dalam</td>
+      <td>besar</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>3</td>
+      <td>jumlah</td>
+      <td>data</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>3</td>
+      <td>jumlah</td>
+      <td>dalam</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>3</td>
+      <td>jumlah</td>
+      <td>besar</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>3</td>
+      <td>jumlah</td>
+      <td>agar</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>3</td>
+      <td>besar</td>
+      <td>dalam</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>3</td>
+      <td>besar</td>
+      <td>jumlah</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>3</td>
+      <td>besar</td>
+      <td>agar</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>3</td>
+      <td>besar</td>
+      <td>model</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>3</td>
+      <td>agar</td>
+      <td>jumlah</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>3</td>
+      <td>agar</td>
+      <td>besar</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>3</td>
+      <td>agar</td>
+      <td>model</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>3</td>
+      <td>agar</td>
+      <td>semakin</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>3</td>
+      <td>model</td>
+      <td>besar</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>3</td>
+      <td>model</td>
+      <td>agar</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>3</td>
+      <td>model</td>
+      <td>semakin</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>3</td>
+      <td>model</td>
+      <td>akurat</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>3</td>
+      <td>semakin</td>
+      <td>agar</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>3</td>
+      <td>semakin</td>
+      <td>model</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>3</td>
+      <td>semakin</td>
+      <td>akurat</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>3</td>
+      <td>akurat</td>
+      <td>model</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>3</td>
+      <td>akurat</td>
+      <td>semakin</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_pasangan</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'pasangan_kata_skipgram.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Tersimpan: 'pasangan_kata_skipgram.csv' -&gt;"</span><span class="p">,</span> <span class="n">df_pasangan</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tersimpan: 'pasangan_kata_skipgram.csv' -&gt; (142, 3)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="melatih-model-skip-gram-dengan-gensim">
+<h1>5. Melatih Model Skip-gram dengan Gensim<a class="headerlink" href="#melatih-model-skip-gram-dengan-gensim" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sg=1</span></code></strong> -&gt; arsitektur <strong>Skip-gram</strong> (<code class="docutils literal notranslate"><span class="pre">sg=0</span></code> = CBOW).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">vector_size</span></code></strong> -&gt; dimensi vektor tiap kata (50, karena korpus kecil).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">window</span></code></strong> -&gt; disamakan dengan <code class="docutils literal notranslate"><span class="pre">WINDOW</span></code> di atas.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">min_count=1</span></code></strong> -&gt; tetap sertakan kata walau cuma muncul 1 kali.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span>
+    <span class="n">sentences</span><span class="o">=</span><span class="n">corpus</span><span class="p">,</span>
+    <span class="n">vector_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">window</span><span class="o">=</span><span class="n">WINDOW</span><span class="p">,</span>
+    <span class="n">min_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">sg</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>          <span class="c1"># sg=1 -&gt; Skip-gram (bukan CBOW)</span>
+    <span class="n">epochs</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+    <span class="n">workers</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Model Skip-gram berhasil dilatih."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah kata dalam vocabulary model:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">index_to_key</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Dimensi vektor tiap kata:"</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">vector_size</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model Skip-gram berhasil dilatih.
+Jumlah kata dalam vocabulary model: 33
+Dimensi vektor tiap kata: 50
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="representasi-vektor-faktor-setiap-kata-per-kalimat">
+<h1>6. Representasi Vektor (Faktor) Setiap Kata per Kalimat<a class="headerlink" href="#representasi-vektor-faktor-setiap-kata-per-kalimat" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"KALIMAT </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">kalimat</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">kata</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="n">vektor</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="n">kata</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Kata: '</span><span class="si">{</span><span class="n">kata</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Vektor (5 nilai pertama dari </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">vektor</span><span class="p">)</span><span class="si">}</span><span class="s2"> dimensi): </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">vektor</span><span class="p">[:</span><span class="mi">5</span><span class="p">],</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2"> ..."</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+KALIMAT 1: Jaringan saraf tiruan meniru cara kerja otak manusia untuk mengenali pola data
+================================================================================
+
+Kata: 'jaringan'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0197 -0.0205  0.0109 -0.007   0.0127] ...
+
+Kata: 'saraf'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0159 -0.0204 -0.0067  0.0099  0.0011] ...
+
+Kata: 'tiruan'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0114  0.0036  0.0065  0.0088 -0.0026] ...
+
+Kata: 'meniru'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0058  0.0054  0.0126 -0.002  -0.015 ] ...
+
+Kata: 'cara'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0058  0.0087  0.0011  0.0121 -0.0013] ...
+
+Kata: 'kerja'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0041 -0.0147 -0.0115 -0.0008  0.0045] ...
+
+Kata: 'otak'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0052 -0.0251 -0.019  -0.002   0.0034] ...
+
+Kata: 'manusia'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0165 -0.0155 -0.009  -0.0007 -0.0127] ...
+
+Kata: 'untuk'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0148 -0.0108 -0.0008  0.0249 -0.0115] ...
+
+Kata: 'mengenali'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0131 -0.0101  0.0071  0.0231  0.0049] ...
+
+Kata: 'pola'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0078 -0.009  -0.018   0.0179  0.0062] ...
+
+Kata: 'data'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0191 -0.0159  0.0162  0.0008 -0.0017] ...
+
+================================================================================
+KALIMAT 2: Setiap neuron pada jaringan saraf tiruan menerima input lalu menghasilkan output melalui fungsi aktivasi
+================================================================================
+
+Kata: 'setiap'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0178 -0.0059  0.0193  0.0174  0.0059] ...
+
+Kata: 'neuron'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0024 -0.0057 -0.003   0.0248 -0.008 ] ...
+
+Kata: 'pada'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0019 -0.0055  0.0166 -0.0073 -0.0082] ...
+
+Kata: 'jaringan'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0197 -0.0205  0.0109 -0.007   0.0127] ...
+
+Kata: 'saraf'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0159 -0.0204 -0.0067  0.0099  0.0011] ...
+
+Kata: 'tiruan'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0114  0.0036  0.0065  0.0088 -0.0026] ...
+
+Kata: 'menerima'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0034 -0.0122 -0.0002  0.0275 -0.0173] ...
+
+Kata: 'input'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0156  0.0036  0.0024  0.0242 -0.0154] ...
+
+Kata: 'lalu'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0124 -0.015   0.0047  0.007   0.011 ] ...
+
+Kata: 'menghasilkan'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0168 -0.0248 -0.0111  0.0241 -0.0022] ...
+
+Kata: 'output'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0226  0.0061  0.0178 -0.0027 -0.0085] ...
+
+Kata: 'melalui'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.016  -0.014   0.0008  0.0247  0.0091] ...
+
+Kata: 'fungsi'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0211 -0.0197 -0.0167  0.025   0.002 ] ...
+
+Kata: 'aktivasi'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0027  0.0011 -0.0134 -0.0083 -0.0151] ...
+
+================================================================================
+KALIMAT 3: Proses pelatihan jaringan saraf tiruan menggunakan data dalam jumlah besar agar model semakin akurat
+================================================================================
+
+Kata: 'proses'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0016  0.0031 -0.0125  0.0164  0.0025] ...
+
+Kata: 'pelatihan'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0082  0.0065  0.0085 -0.0087  0.0143] ...
+
+Kata: 'jaringan'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0197 -0.0205  0.0109 -0.007   0.0127] ...
+
+Kata: 'saraf'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0159 -0.0204 -0.0067  0.0099  0.0011] ...
+
+Kata: 'tiruan'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0114  0.0036  0.0065  0.0088 -0.0026] ...
+
+Kata: 'menggunakan'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0169 -0.0109  0.0125  0.0014  0.0206] ...
+
+Kata: 'data'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0191 -0.0159  0.0162  0.0008 -0.0017] ...
+
+Kata: 'dalam'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0101  0.0001  0.018   0.0243 -0.0074] ...
+
+Kata: 'jumlah'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0238  0.0106 -0.0007 -0.0093  0.0058] ...
+
+Kata: 'besar'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0247  0.0055 -0.0078  0.0278  0.0014] ...
+
+Kata: 'agar'
+Vektor (5 nilai pertama dari 50 dimensi): [ 0.0067 -0.0246 -0.0088  0.0058  0.0208] ...
+
+Kata: 'model'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0014  0.0086 -0.0201  0.0217  0.0034] ...
+
+Kata: 'semakin'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0096 -0.0045 -0.0129 -0.0009  0.0075] ...
+
+Kata: 'akurat'
+Vektor (5 nilai pertama dari 50 dimensi): [-0.0014  0.0116 -0.0005  0.0152 -0.0003] ...
+</pre></div>
+</div>
+</div>
+</div>
+<section id="b-ditampilkan-sebagai-tabel-dataframe-per-kalimat">
+<h2>6b. Ditampilkan sebagai Tabel (DataFrame) per Kalimat<a class="headerlink" href="#b-ditampilkan-sebagai-tabel-dataframe-per-kalimat" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kolom_dim</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">'dim_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">'</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)]</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"--- Tabel Vektor Kata - Kalimat </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> ---"</span><span class="p">)</span>
+    <span class="n">data_tabel</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">kata</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="n">vektor</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="n">kata</span><span class="p">]</span>
+        <span class="n">data_tabel</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">kata</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">vektor</span><span class="p">[:</span><span class="mi">8</span><span class="p">],</span> <span class="mi">4</span><span class="p">)))</span>
+    <span class="n">df_kalimat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_tabel</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Kata'</span><span class="p">]</span> <span class="o">+</span> <span class="n">kolom_dim</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">df_kalimat</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Tabel Vektor Kata - Kalimat 1 ---
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kata</th>
+      <th>dim_1</th>
+      <th>dim_2</th>
+      <th>dim_3</th>
+      <th>dim_4</th>
+      <th>dim_5</th>
+      <th>dim_6</th>
+      <th>dim_7</th>
+      <th>dim_8</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>jaringan</td>
+      <td>0.0197</td>
+      <td>-0.0205</td>
+      <td>0.0109</td>
+      <td>-0.0070</td>
+      <td>0.0127</td>
+      <td>0.0245</td>
+      <td>-0.0002</td>
+      <td>0.0130</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>saraf</td>
+      <td>0.0159</td>
+      <td>-0.0204</td>
+      <td>-0.0067</td>
+      <td>0.0099</td>
+      <td>0.0011</td>
+      <td>-0.0061</td>
+      <td>-0.0096</td>
+      <td>-0.0074</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>tiruan</td>
+      <td>-0.0114</td>
+      <td>0.0036</td>
+      <td>0.0065</td>
+      <td>0.0088</td>
+      <td>-0.0026</td>
+      <td>0.0266</td>
+      <td>-0.0272</td>
+      <td>0.0138</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>meniru</td>
+      <td>-0.0058</td>
+      <td>0.0054</td>
+      <td>0.0126</td>
+      <td>-0.0020</td>
+      <td>-0.0150</td>
+      <td>0.0207</td>
+      <td>-0.0186</td>
+      <td>0.0066</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>cara</td>
+      <td>-0.0058</td>
+      <td>0.0087</td>
+      <td>0.0011</td>
+      <td>0.0121</td>
+      <td>-0.0013</td>
+      <td>-0.0067</td>
+      <td>0.0097</td>
+      <td>0.0145</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>kerja</td>
+      <td>0.0041</td>
+      <td>-0.0147</td>
+      <td>-0.0115</td>
+      <td>-0.0008</td>
+      <td>0.0045</td>
+      <td>-0.0040</td>
+      <td>0.0102</td>
+      <td>0.0028</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>otak</td>
+      <td>-0.0052</td>
+      <td>-0.0251</td>
+      <td>-0.0190</td>
+      <td>-0.0020</td>
+      <td>0.0034</td>
+      <td>-0.0095</td>
+      <td>0.0116</td>
+      <td>0.0022</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>manusia</td>
+      <td>0.0165</td>
+      <td>-0.0155</td>
+      <td>-0.0090</td>
+      <td>-0.0007</td>
+      <td>-0.0127</td>
+      <td>-0.0081</td>
+      <td>-0.0123</td>
+      <td>0.0187</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>untuk</td>
+      <td>-0.0148</td>
+      <td>-0.0108</td>
+      <td>-0.0008</td>
+      <td>0.0249</td>
+      <td>-0.0115</td>
+      <td>0.0078</td>
+      <td>-0.0135</td>
+      <td>-0.0106</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>mengenali</td>
+      <td>0.0131</td>
+      <td>-0.0101</td>
+      <td>0.0071</td>
+      <td>0.0231</td>
+      <td>0.0049</td>
+      <td>0.0137</td>
+      <td>-0.0166</td>
+      <td>-0.0069</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>pola</td>
+      <td>-0.0078</td>
+      <td>-0.0090</td>
+      <td>-0.0180</td>
+      <td>0.0179</td>
+      <td>0.0062</td>
+      <td>-0.0105</td>
+      <td>-0.0167</td>
+      <td>0.0054</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>data</td>
+      <td>0.0191</td>
+      <td>-0.0159</td>
+      <td>0.0162</td>
+      <td>0.0008</td>
+      <td>-0.0017</td>
+      <td>0.0167</td>
+      <td>-0.0238</td>
+      <td>0.0071</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Tabel Vektor Kata - Kalimat 2 ---
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kata</th>
+      <th>dim_1</th>
+      <th>dim_2</th>
+      <th>dim_3</th>
+      <th>dim_4</th>
+      <th>dim_5</th>
+      <th>dim_6</th>
+      <th>dim_7</th>
+      <th>dim_8</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>setiap</td>
+      <td>0.0178</td>
+      <td>-0.0059</td>
+      <td>0.0193</td>
+      <td>0.0174</td>
+      <td>0.0059</td>
+      <td>0.0237</td>
+      <td>-0.0050</td>
+      <td>0.0121</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>neuron</td>
+      <td>-0.0024</td>
+      <td>-0.0057</td>
+      <td>-0.0030</td>
+      <td>0.0248</td>
+      <td>-0.0080</td>
+      <td>0.0123</td>
+      <td>-0.0225</td>
+      <td>0.0179</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>pada</td>
+      <td>0.0019</td>
+      <td>-0.0055</td>
+      <td>0.0166</td>
+      <td>-0.0073</td>
+      <td>-0.0082</td>
+      <td>-0.0053</td>
+      <td>-0.0161</td>
+      <td>0.0194</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>jaringan</td>
+      <td>0.0197</td>
+      <td>-0.0205</td>
+      <td>0.0109</td>
+      <td>-0.0070</td>
+      <td>0.0127</td>
+      <td>0.0245</td>
+      <td>-0.0002</td>
+      <td>0.0130</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>saraf</td>
+      <td>0.0159</td>
+      <td>-0.0204</td>
+      <td>-0.0067</td>
+      <td>0.0099</td>
+      <td>0.0011</td>
+      <td>-0.0061</td>
+      <td>-0.0096</td>
+      <td>-0.0074</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>tiruan</td>
+      <td>-0.0114</td>
+      <td>0.0036</td>
+      <td>0.0065</td>
+      <td>0.0088</td>
+      <td>-0.0026</td>
+      <td>0.0266</td>
+      <td>-0.0272</td>
+      <td>0.0138</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>menerima</td>
+      <td>0.0034</td>
+      <td>-0.0122</td>
+      <td>-0.0002</td>
+      <td>0.0275</td>
+      <td>-0.0173</td>
+      <td>0.0297</td>
+      <td>-0.0098</td>
+      <td>0.0155</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>input</td>
+      <td>0.0156</td>
+      <td>0.0036</td>
+      <td>0.0024</td>
+      <td>0.0242</td>
+      <td>-0.0154</td>
+      <td>0.0264</td>
+      <td>0.0065</td>
+      <td>0.0044</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>lalu</td>
+      <td>-0.0124</td>
+      <td>-0.0150</td>
+      <td>0.0047</td>
+      <td>0.0070</td>
+      <td>0.0110</td>
+      <td>0.0154</td>
+      <td>-0.0125</td>
+      <td>0.0098</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>menghasilkan</td>
+      <td>-0.0168</td>
+      <td>-0.0248</td>
+      <td>-0.0111</td>
+      <td>0.0241</td>
+      <td>-0.0022</td>
+      <td>0.0186</td>
+      <td>-0.0111</td>
+      <td>-0.0092</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>output</td>
+      <td>0.0226</td>
+      <td>0.0061</td>
+      <td>0.0178</td>
+      <td>-0.0027</td>
+      <td>-0.0085</td>
+      <td>0.0232</td>
+      <td>-0.0173</td>
+      <td>-0.0139</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>melalui</td>
+      <td>-0.0160</td>
+      <td>-0.0140</td>
+      <td>0.0008</td>
+      <td>0.0247</td>
+      <td>0.0091</td>
+      <td>0.0203</td>
+      <td>-0.0054</td>
+      <td>-0.0119</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>fungsi</td>
+      <td>0.0211</td>
+      <td>-0.0197</td>
+      <td>-0.0167</td>
+      <td>0.0250</td>
+      <td>0.0020</td>
+      <td>0.0059</td>
+      <td>0.0027</td>
+      <td>-0.0011</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>aktivasi</td>
+      <td>0.0027</td>
+      <td>0.0011</td>
+      <td>-0.0134</td>
+      <td>-0.0083</td>
+      <td>-0.0151</td>
+      <td>0.0079</td>
+      <td>-0.0239</td>
+      <td>0.0049</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Tabel Vektor Kata - Kalimat 3 ---
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kata</th>
+      <th>dim_1</th>
+      <th>dim_2</th>
+      <th>dim_3</th>
+      <th>dim_4</th>
+      <th>dim_5</th>
+      <th>dim_6</th>
+      <th>dim_7</th>
+      <th>dim_8</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>proses</td>
+      <td>0.0016</td>
+      <td>0.0031</td>
+      <td>-0.0125</td>
+      <td>0.0164</td>
+      <td>0.0025</td>
+      <td>0.0056</td>
+      <td>0.0063</td>
+      <td>0.0078</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>pelatihan</td>
+      <td>0.0082</td>
+      <td>0.0065</td>
+      <td>0.0085</td>
+      <td>-0.0087</td>
+      <td>0.0143</td>
+      <td>0.0074</td>
+      <td>-0.0130</td>
+      <td>0.0039</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>jaringan</td>
+      <td>0.0197</td>
+      <td>-0.0205</td>
+      <td>0.0109</td>
+      <td>-0.0070</td>
+      <td>0.0127</td>
+      <td>0.0245</td>
+      <td>-0.0002</td>
+      <td>0.0130</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>saraf</td>
+      <td>0.0159</td>
+      <td>-0.0204</td>
+      <td>-0.0067</td>
+      <td>0.0099</td>
+      <td>0.0011</td>
+      <td>-0.0061</td>
+      <td>-0.0096</td>
+      <td>-0.0074</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>tiruan</td>
+      <td>-0.0114</td>
+      <td>0.0036</td>
+      <td>0.0065</td>
+      <td>0.0088</td>
+      <td>-0.0026</td>
+      <td>0.0266</td>
+      <td>-0.0272</td>
+      <td>0.0138</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>menggunakan</td>
+      <td>0.0169</td>
+      <td>-0.0109</td>
+      <td>0.0125</td>
+      <td>0.0014</td>
+      <td>0.0206</td>
+      <td>0.0097</td>
+      <td>0.0008</td>
+      <td>0.0198</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>data</td>
+      <td>0.0191</td>
+      <td>-0.0159</td>
+      <td>0.0162</td>
+      <td>0.0008</td>
+      <td>-0.0017</td>
+      <td>0.0167</td>
+      <td>-0.0238</td>
+      <td>0.0071</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>dalam</td>
+      <td>-0.0101</td>
+      <td>0.0001</td>
+      <td>0.0180</td>
+      <td>0.0243</td>
+      <td>-0.0074</td>
+      <td>0.0078</td>
+      <td>-0.0073</td>
+      <td>-0.0055</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>jumlah</td>
+      <td>0.0238</td>
+      <td>0.0106</td>
+      <td>-0.0007</td>
+      <td>-0.0093</td>
+      <td>0.0058</td>
+      <td>0.0123</td>
+      <td>-0.0233</td>
+      <td>0.0103</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>besar</td>
+      <td>0.0247</td>
+      <td>0.0055</td>
+      <td>-0.0078</td>
+      <td>0.0278</td>
+      <td>0.0014</td>
+      <td>0.0087</td>
+      <td>-0.0109</td>
+      <td>-0.0097</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>agar</td>
+      <td>0.0067</td>
+      <td>-0.0246</td>
+      <td>-0.0088</td>
+      <td>0.0058</td>
+      <td>0.0208</td>
+      <td>0.0290</td>
+      <td>-0.0226</td>
+      <td>0.0200</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>model</td>
+      <td>-0.0014</td>
+      <td>0.0086</td>
+      <td>-0.0201</td>
+      <td>0.0217</td>
+      <td>0.0034</td>
+      <td>-0.0070</td>
+      <td>-0.0145</td>
+      <td>0.0058</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>semakin</td>
+      <td>-0.0096</td>
+      <td>-0.0045</td>
+      <td>-0.0129</td>
+      <td>-0.0009</td>
+      <td>0.0075</td>
+      <td>-0.0078</td>
+      <td>0.0012</td>
+      <td>-0.0129</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>akurat</td>
+      <td>-0.0014</td>
+      <td>0.0116</td>
+      <td>-0.0005</td>
+      <td>0.0152</td>
+      <td>-0.0003</td>
+      <td>-0.0023</td>
+      <td>0.0038</td>
+      <td>0.0226</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="menyimpan-seluruh-representasi-vektor-ke-csv">
+<h1>7. Menyimpan Seluruh Representasi Vektor ke CSV<a class="headerlink" href="#menyimpan-seluruh-representasi-vektor-ke-csv" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">baris_csv</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">kata</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="n">vektor</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="n">kata</span><span class="p">]</span>
+        <span class="n">baris</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Kalimat_ke'</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span> <span class="s1">'Kalimat'</span><span class="p">:</span> <span class="n">kalimat</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s1">'Kata'</span><span class="p">:</span> <span class="n">kata</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">vector_size</span><span class="p">):</span>
+            <span class="n">baris</span><span class="p">[</span><span class="sa">f</span><span class="s1">'dim_</span><span class="si">{</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">vektor</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+        <span class="n">baris_csv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">baris</span><span class="p">)</span>
+
+<span class="n">df_vektor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">baris_csv</span><span class="p">)</span>
+<span class="n">df_vektor</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'vektor_kata_skipgram.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Tersimpan: 'vektor_kata_skipgram.csv' -&gt;"</span><span class="p">,</span> <span class="n">df_vektor</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">df_vektor</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tersimpan: 'vektor_kata_skipgram.csv' -&gt; (40, 53)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kalimat_ke</th>
+      <th>Kalimat</th>
+      <th>Kata</th>
+      <th>dim_1</th>
+      <th>dim_2</th>
+      <th>dim_3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Jaringan saraf tiruan meniru cara kerja otak m...</td>
+      <td>jaringan</td>
+      <td>0.019716</td>
+      <td>-0.020456</td>
+      <td>0.010936</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>Jaringan saraf tiruan meniru cara kerja otak m...</td>
+      <td>saraf</td>
+      <td>0.015913</td>
+      <td>-0.020379</td>
+      <td>-0.006741</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>Jaringan saraf tiruan meniru cara kerja otak m...</td>
+      <td>tiruan</td>
+      <td>-0.011392</td>
+      <td>0.003566</td>
+      <td>0.006534</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>Jaringan saraf tiruan meniru cara kerja otak m...</td>
+      <td>meniru</td>
+      <td>-0.005809</td>
+      <td>0.005390</td>
+      <td>0.012589</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>Jaringan saraf tiruan meniru cara kerja otak m...</td>
+      <td>cara</td>
+      <td>-0.005793</td>
+      <td>0.008657</td>
+      <td>0.001092</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>Jaringan saraf tiruan meniru cara kerja otak m...</td>
+      <td>kerja</td>
+      <td>0.004148</td>
+      <td>-0.014674</td>
+      <td>-0.011522</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>Jaringan saraf tiruan meniru cara kerja otak m...</td>
+      <td>otak</td>
+      <td>-0.005203</td>
+      <td>-0.025088</td>
+      <td>-0.019046</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1</td>
+      <td>Jaringan saraf tiruan meniru cara kerja otak m...</td>
+      <td>manusia</td>
+      <td>0.016541</td>
+      <td>-0.015492</td>
+      <td>-0.009046</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>Jaringan saraf tiruan meniru cara kerja otak m...</td>
+      <td>untuk</td>
+      <td>-0.014848</td>
+      <td>-0.010766</td>
+      <td>-0.000774</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>Jaringan saraf tiruan meniru cara kerja otak m...</td>
+      <td>mengenali</td>
+      <td>0.013115</td>
+      <td>-0.010143</td>
+      <td>0.007078</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="uji-kualitas-embedding-most-similar">
+<h1>8. Uji Kualitas Embedding (Most Similar)<a class="headerlink" href="#uji-kualitas-embedding-most-similar" title="Link to this heading">#</a></h1>
+<p>Karena korpusnya sangat kecil (cuma 3 kalimat), hasilnya belum tentu 100% masuk akal secara semantik — wajar untuk korpus sekecil ini.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kata_uji</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'jaringan'</span><span class="p">,</span> <span class="s1">'neuron'</span><span class="p">,</span> <span class="s1">'data'</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">kata</span> <span class="ow">in</span> <span class="n">kata_uji</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Kata paling mirip dengan '</span><span class="si">{</span><span class="n">kata</span><span class="si">}</span><span class="s2">':"</span><span class="p">)</span>
+    <span class="n">mirip</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="n">kata</span><span class="p">,</span> <span class="n">topn</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">kata_mirip</span><span class="p">,</span> <span class="n">skor</span> <span class="ow">in</span> <span class="n">mirip</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  - </span><span class="si">{</span><span class="n">kata_mirip</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">skor</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kata paling mirip dengan 'jaringan':
+  - data: 0.6513
+  - saraf: 0.6455
+  - input: 0.6154
+
+Kata paling mirip dengan 'neuron':
+  - akurat: 0.4527
+  - lalu: 0.4263
+  - menghasilkan: 0.4100
+
+Kata paling mirip dengan 'data':
+  - jaringan: 0.6513
+  - pelatihan: 0.6487
+  - saraf: 0.6433
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="klasifikasi-jenis-kata-dengan-naive-bayes-fitur-vektor-skip-gram">
+<h1>9. Klasifikasi Jenis Kata dengan Naive Bayes (Fitur: Vektor Skip-gram)<a class="headerlink" href="#klasifikasi-jenis-kata-dengan-naive-bayes-fitur-vektor-skip-gram" title="Link to this heading">#</a></h1>
+<p>Vektor tiap kata (hasil Skip-gram) dipakai sebagai <strong>fitur input</strong> untuk classifier <strong>Naive Bayes</strong> (<code class="docutils literal notranslate"><span class="pre">GaussianNB</span></code>, cocok untuk fitur numerik kontinu seperti vektor skip-gram), untuk memprediksi <strong>jenis kata (part-of-speech)</strong>: <code class="docutils literal notranslate"><span class="pre">benda</span></code>, <code class="docutils literal notranslate"><span class="pre">kerja</span></code>, <code class="docutils literal notranslate"><span class="pre">sifat</span></code>, atau <code class="docutils literal notranslate"><span class="pre">lainnya</span></code>. Label diberikan manual berdasarkan tata bahasa untuk seluruh 33 kata unik.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label_jenis_kata</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'jaringan'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span> <span class="s1">'saraf'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span> <span class="s1">'tiruan'</span><span class="p">:</span> <span class="s1">'sifat'</span><span class="p">,</span> <span class="s1">'meniru'</span><span class="p">:</span> <span class="s1">'kerja'</span><span class="p">,</span>
+    <span class="s1">'cara'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span> <span class="s1">'kerja'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span> <span class="s1">'otak'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span> <span class="s1">'manusia'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span>
+    <span class="s1">'untuk'</span><span class="p">:</span> <span class="s1">'lainnya'</span><span class="p">,</span> <span class="s1">'mengenali'</span><span class="p">:</span> <span class="s1">'kerja'</span><span class="p">,</span> <span class="s1">'pola'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span> <span class="s1">'data'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span>
+    <span class="s1">'setiap'</span><span class="p">:</span> <span class="s1">'lainnya'</span><span class="p">,</span> <span class="s1">'neuron'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span> <span class="s1">'pada'</span><span class="p">:</span> <span class="s1">'lainnya'</span><span class="p">,</span> <span class="s1">'menerima'</span><span class="p">:</span> <span class="s1">'kerja'</span><span class="p">,</span>
+    <span class="s1">'input'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span> <span class="s1">'lalu'</span><span class="p">:</span> <span class="s1">'lainnya'</span><span class="p">,</span> <span class="s1">'menghasilkan'</span><span class="p">:</span> <span class="s1">'kerja'</span><span class="p">,</span> <span class="s1">'output'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span>
+    <span class="s1">'melalui'</span><span class="p">:</span> <span class="s1">'lainnya'</span><span class="p">,</span> <span class="s1">'fungsi'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span> <span class="s1">'aktivasi'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span> <span class="s1">'proses'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span>
+    <span class="s1">'pelatihan'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span> <span class="s1">'menggunakan'</span><span class="p">:</span> <span class="s1">'kerja'</span><span class="p">,</span> <span class="s1">'dalam'</span><span class="p">:</span> <span class="s1">'lainnya'</span><span class="p">,</span> <span class="s1">'jumlah'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span>
+    <span class="s1">'besar'</span><span class="p">:</span> <span class="s1">'sifat'</span><span class="p">,</span> <span class="s1">'agar'</span><span class="p">:</span> <span class="s1">'lainnya'</span><span class="p">,</span> <span class="s1">'model'</span><span class="p">:</span> <span class="s1">'benda'</span><span class="p">,</span> <span class="s1">'semakin'</span><span class="p">:</span> <span class="s1">'lainnya'</span><span class="p">,</span>
+    <span class="s1">'akurat'</span><span class="p">:</span> <span class="s1">'sifat'</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">label_jenis_kata</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">semua_kata</span><span class="p">),</span> <span class="s2">"Ada kata yang belum diberi label!"</span>
+
+<span class="n">df_label</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">'Kata'</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">label_jenis_kata</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
+    <span class="s1">'Jenis_Kata'</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">label_jenis_kata</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Distribusi label jenis kata:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_label</span><span class="p">[</span><span class="s1">'Jenis_Kata'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<span class="n">df_label</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribusi label jenis kata:
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jenis_Kata
+benda      17
+lainnya     8
+kerja       5
+sifat       3
+Name: count, dtype: int64
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kata</th>
+      <th>Jenis_Kata</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>jaringan</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>saraf</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>tiruan</td>
+      <td>sifat</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>meniru</td>
+      <td>kerja</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>cara</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>kerja</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>otak</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>manusia</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>untuk</td>
+      <td>lainnya</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>mengenali</td>
+      <td>kerja</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>pola</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>data</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>setiap</td>
+      <td>lainnya</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>neuron</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>pada</td>
+      <td>lainnya</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>menerima</td>
+      <td>kerja</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>input</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>lalu</td>
+      <td>lainnya</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>menghasilkan</td>
+      <td>kerja</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>output</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>melalui</td>
+      <td>lainnya</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>fungsi</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>aktivasi</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>proses</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>pelatihan</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>menggunakan</td>
+      <td>kerja</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>dalam</td>
+      <td>lainnya</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>jumlah</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>besar</td>
+      <td>sifat</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>agar</td>
+      <td>lainnya</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>model</td>
+      <td>benda</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>semakin</td>
+      <td>lainnya</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>akurat</td>
+      <td>sifat</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="n">kata</span><span class="p">]</span> <span class="k">for</span> <span class="n">kata</span> <span class="ow">in</span> <span class="n">df_label</span><span class="p">[</span><span class="s1">'Kata'</span><span class="p">]])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_label</span><span class="p">[</span><span class="s1">'Jenis_Kata'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Bentuk X (fitur):"</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Bentuk y (label):"</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Bentuk X (fitur): (33, 50)
+Bentuk y (label): (33,)
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Catatan evaluasi:</strong> karena vocabulary cuma 33 kata, dipakai <strong>Leave-One-Out Cross-Validation (LOOCV)</strong> supaya estimasi akurasi lebih bisa dipercaya dibanding split train/test biasa yang tidak stabil untuk data sekecil ini.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+
+<span class="n">loo</span> <span class="o">=</span> <span class="n">LeaveOneOut</span><span class="p">()</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">cross_val_predict</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_scaled</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">loo</span><span class="p">)</span>
+
+<span class="n">akurasi</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Akurasi klasifikasi Naive Bayes (Leave-One-Out CV): </span><span class="si">{</span><span class="n">akurasi</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">akurasi</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Classification Report:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Akurasi klasifikasi Naive Bayes (Leave-One-Out CV): 0.3939 (39.4%)
+
+Classification Report:
+              precision    recall  f1-score   support
+
+       benda       0.54      0.76      0.63        17
+       kerja       0.00      0.00      0.00         5
+     lainnya       0.00      0.00      0.00         8
+       sifat       0.00      0.00      0.00         3
+
+    accuracy                           0.39        33
+   macro avg       0.14      0.19      0.16        33
+weighted avg       0.28      0.39      0.33        33
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_hasil_klasifikasi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">'Kata'</span><span class="p">:</span> <span class="n">df_label</span><span class="p">[</span><span class="s1">'Kata'</span><span class="p">],</span>
+    <span class="s1">'Jenis_Kata_Asli'</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span>
+    <span class="s1">'Jenis_Kata_Prediksi'</span><span class="p">:</span> <span class="n">y_pred</span><span class="p">,</span>
+    <span class="s1">'Benar'</span><span class="p">:</span> <span class="n">y</span> <span class="o">==</span> <span class="n">y_pred</span>
+<span class="p">})</span>
+<span class="n">df_hasil_klasifikasi</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'klasifikasi_jenis_kata_naive_bayes.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Tersimpan: 'klasifikasi_jenis_kata_naive_bayes.csv' -&gt;"</span><span class="p">,</span> <span class="n">df_hasil_klasifikasi</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">df_hasil_klasifikasi</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tersimpan: 'klasifikasi_jenis_kata_naive_bayes.csv' -&gt; (33, 4)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kata</th>
+      <th>Jenis_Kata_Asli</th>
+      <th>Jenis_Kata_Prediksi</th>
+      <th>Benar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>jaringan</td>
+      <td>benda</td>
+      <td>benda</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>saraf</td>
+      <td>benda</td>
+      <td>benda</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>tiruan</td>
+      <td>sifat</td>
+      <td>lainnya</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>meniru</td>
+      <td>kerja</td>
+      <td>lainnya</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>cara</td>
+      <td>benda</td>
+      <td>lainnya</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>kerja</td>
+      <td>benda</td>
+      <td>benda</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>otak</td>
+      <td>benda</td>
+      <td>benda</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>manusia</td>
+      <td>benda</td>
+      <td>benda</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>untuk</td>
+      <td>lainnya</td>
+      <td>benda</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>mengenali</td>
+      <td>kerja</td>
+      <td>lainnya</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>pola</td>
+      <td>benda</td>
+      <td>lainnya</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>data</td>
+      <td>benda</td>
+      <td>benda</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>setiap</td>
+      <td>lainnya</td>
+      <td>benda</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>neuron</td>
+      <td>benda</td>
+      <td>lainnya</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>pada</td>
+      <td>lainnya</td>
+      <td>benda</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>menerima</td>
+      <td>kerja</td>
+      <td>benda</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>input</td>
+      <td>benda</td>
+      <td>benda</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>lalu</td>
+      <td>lainnya</td>
+      <td>benda</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>menghasilkan</td>
+      <td>kerja</td>
+      <td>lainnya</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>output</td>
+      <td>benda</td>
+      <td>lainnya</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>melalui</td>
+      <td>lainnya</td>
+      <td>benda</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>fungsi</td>
+      <td>benda</td>
+      <td>benda</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>aktivasi</td>
+      <td>benda</td>
+      <td>benda</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>proses</td>
+      <td>benda</td>
+      <td>benda</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>pelatihan</td>
+      <td>benda</td>
+      <td>benda</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>menggunakan</td>
+      <td>kerja</td>
+      <td>lainnya</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>dalam</td>
+      <td>lainnya</td>
+      <td>benda</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>jumlah</td>
+      <td>benda</td>
+      <td>benda</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>besar</td>
+      <td>sifat</td>
+      <td>benda</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>agar</td>
+      <td>lainnya</td>
+      <td>benda</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>model</td>
+      <td>benda</td>
+      <td>benda</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>semakin</td>
+      <td>lainnya</td>
+      <td>benda</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>akurat</td>
+      <td>sifat</td>
+      <td>benda</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="kesimpulan">
+<h1>10. Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Model <strong>Skip-gram</strong> (Gensim <code class="docutils literal notranslate"><span class="pre">Word2Vec</span></code>, <code class="docutils literal notranslate"><span class="pre">sg=1</span></code>) berhasil melatih vektor untuk 33 kata unik dari 3 kalimat.</p></li>
+<li><p><strong>Pasangan kata (target, context)</strong> berhasil dibentuk manual (134 pasangan, window=2), tersimpan di <code class="docutils literal notranslate"><span class="pre">pasangan_kata_skipgram.csv</span></code>.</p></li>
+<li><p>Setiap kata berhasil dinyatakan sebagai <strong>vektor (faktor) numerik</strong> 50 dimensi, tersimpan di <code class="docutils literal notranslate"><span class="pre">vektor_kata_skipgram.csv</span></code>.</p></li>
+<li><p>Vektor tersebut dipakai sebagai fitur untuk <strong>klasifikasi jenis kata dengan Naive Bayes (GaussianNB)</strong>, dievaluasi dengan Leave-One-Out CV, hasil tersimpan di <code class="docutils literal notranslate"><span class="pre">klasifikasi_jenis_kata_naive_bayes.csv</span></code>.</p></li>
+<li><p>Data yang sangat kecil (3 kalimat) membatasi akurasi - lihat file kedua (<code class="docutils literal notranslate"><span class="pre">skipgram_klasifikasi_berita_detik.ipynb</span></code>) untuk versi dengan data berita ASLI dari <a class="reference external" href="http://Detik.com">Detik.com</a> dalam jumlah lebih besar.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="crawlingdata2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lanjutan:</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="klasifikasi_skipgram.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Klasifikasi Berita Detik (Hot, Health, Sport) — Vektor Skip-gram + Naive Bayes</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Skip-gram (Word2Vec) dengan Gensim — 3 Kalimat + Klasifikasi Naive Bayes</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">1. Import Library</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#menyiapkan-3-kalimat-berbeda">2. Menyiapkan 3 Kalimat Berbeda</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-tokenisasi">3. Preprocessing &amp; Tokenisasi</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pasangan-kata-skip-gram-word-pairs">4. Pasangan Kata (Skip-gram Word Pairs)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#melatih-model-skip-gram-dengan-gensim">5. Melatih Model Skip-gram dengan Gensim</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#representasi-vektor-faktor-setiap-kata-per-kalimat">6. Representasi Vektor (Faktor) Setiap Kata per Kalimat</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-ditampilkan-sebagai-tabel-dataframe-per-kalimat">6b. Ditampilkan sebagai Tabel (DataFrame) per Kalimat</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-seluruh-representasi-vektor-ke-csv">7. Menyimpan Seluruh Representasi Vektor ke CSV</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#uji-kualitas-embedding-most-similar">8. Uji Kualitas Embedding (Most Similar)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-jenis-kata-dengan-naive-bayes-fitur-vektor-skip-gram">9. Klasifikasi Jenis Kata dengan Naive Bayes (Fitur: Vektor Skip-gram)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">10. Kesimpulan</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Achmad Sujatmiko Su'ud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
