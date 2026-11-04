@@ -1,8 +1,10 @@
 import ipaddress
+import json
 import os
 import re
 import socket
 import time
+from pathlib import Path
 from urllib.parse import unquote, urljoin, urlparse
 
 import joblib
@@ -11,7 +13,6 @@ import pandas as pd
 import requests
 import streamlit as st
 from bs4 import BeautifulSoup
-from gensim.models import Word2Vec
 from sklearn.decomposition import PCA
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
@@ -19,7 +20,8 @@ from sklearn.naive_bayes import GaussianNB
 
 st.set_page_config(page_title="Klasifikasi Berita Detik", page_icon="📰", layout="wide")
 
-CSV = "df_berita_3kategori.csv"
+BASE = Path(__file__).parent
+CSV = str(BASE / "df_berita_3kategori.csv")
 EMOJI = {"hot": "🔥", "health": "🏥", "sport": "⚽"}
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                          "(KHTML, like Gecko) Chrome/124.0 Safari/537.36",
@@ -38,16 +40,54 @@ EVAL_NOTEBOOK = {
 }
 
 
+# =========================================================
+# Pengganti ringan gensim (hanya butuh numpy)
+# =========================================================
+class KV:
+    """Meniru bagian KeyedVectors gensim yang dipakai aplikasi."""
+
+    def __init__(self, words, vectors):
+        self.index_to_key = words
+        self.vectors = vectors
+        self.key_to_index = {w: i for i, w in enumerate(words)}
+        norm = np.linalg.norm(vectors, axis=1, keepdims=True)
+        norm[norm == 0] = 1
+        self._unit = vectors / norm
+
+    def __contains__(self, w):
+        return w in self.key_to_index
+
+    def __getitem__(self, w):
+        return self.vectors[self.key_to_index[w]]
+
+    def most_similar(self, w, topn=5):
+        i = self.key_to_index[w]
+        sims = self._unit @ self._unit[i]
+        sims[i] = -np.inf
+        idx = np.argsort(-sims)[:topn]
+        return [(self.index_to_key[j], float(sims[j])) for j in idx]
+
+
+class W2V:
+    def __init__(self, wv, window, vector_size):
+        self.wv, self.window, self.vector_size = wv, window, vector_size
+
+
 @st.cache_resource
 def muat_model():
-    return (Word2Vec.load("model_skipgram.model"), joblib.load("scaler.pkl"),
-            joblib.load("model_naive_bayes.pkl"), joblib.load("label_encoder.pkl"))
+    with open(BASE / "w2v_meta.json", encoding="utf-8") as f:
+        meta = json.load(f)
+    w2v = W2V(KV(meta["words"], np.load(BASE / "w2v_vectors.npy")),
+              meta["window"], meta["vector_size"])
+    return (w2v, joblib.load(BASE / "scaler.pkl"),
+            joblib.load(BASE / "model_naive_bayes.pkl"),
+            joblib.load(BASE / "label_encoder.pkl"))
 
 
 try:
     w2v, scaler, clf, le = muat_model()
 except FileNotFoundError as e:
-    st.error(f"File model belum ditemukan satu folder dengan app2.py.\n\n{e}")
+    st.error(f"File model belum ditemukan satu folder dengan app.py.\n\n{e}")
     st.stop()
 
 
@@ -424,7 +464,7 @@ def halaman_dataset():
     df = ambil_dataset()
 
     if df is None:
-        st.info(f"`{CSV}` tidak ditemukan / tidak valid. Menampilkan hasil evaluasi dari notebook.")
+        st.info(f"`{Path(CSV).name}` tidak ditemukan / tidak valid. Menampilkan hasil evaluasi dari notebook.")
         ev = EVAL_NOTEBOOK
     else:
         c1, c2, c3 = st.columns(3)
