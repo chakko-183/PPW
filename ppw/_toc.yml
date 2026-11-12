@@ -12,3 +12,5 @@ chapters:
   sections:
     - file: klasifikasi_skipgram
 - file: graph
+  sections:
+    - file: page_rank
