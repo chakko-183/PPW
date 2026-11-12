@@ -1,0 +1,1382 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Graph Netwrokx &#8212; Pencarian &amp; Penambangan Web</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'graph';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Page Rank" href="page_rank.html" />
+    <link rel="prev" title="Klasifikasi Berita Detik" href="klasifikasi_skipgram.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Pencarian & Penambangan Web - Home"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Pencarian & Penambangan Web - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to my Pencarian & Penambangan Web
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="pengantar.html">Web Mining</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="crawlingdata.html">Crawling Data Detik.com</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="crawlingdata2.html">Lanjutan:</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="skipgram.html">Skip-gram (Word2Vec)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="klasifikasi_skipgram.html">Klasifikasi Berita Detik</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Graph Netwrokx</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="page_rank.html">Page Rank</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/chakko-183/PPW" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/chakko-183/PPW/issues/new?title=Issue%20on%20page%20%2Fgraph.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/graph.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Graph Netwrokx</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">Import library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-undirected">Graph undirected</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-directed">Graph directed</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi">Visualisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriks-adjacency">Matriks adjacency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#degree-per-vertex">Degree per vertex</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rata-rata-degree">Rata-rata degree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#density">Density</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lintasan-terpendek">Lintasan terpendek</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#koefisien-klasterisasi">Koefisien klasterisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-derajat-tabel">Distribusi derajat (tabel)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-derajat-grafik">Distribusi derajat (grafik)</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="graph-netwrokx">
+<h1>Graph Netwrokx<a class="headerlink" href="#graph-netwrokx" title="Link to this heading">#</a></h1>
+<p>Apa itu graph?</p>
+<p>Graph adalah struktur matematika yang terdiri dari vertex/node (titik) dan edge (garis penghubung antar titik). Graph dipakai untuk memodelkan jaringan, misalnya pertemanan di media sosial, jalan antar kota, atau hubungan antar website.</p>
+<p>Undirected (tidak berarah): edge tidak punya arah. Jika A terhubung ke B, maka B juga terhubung ke A (seperti pertemanan Facebook).
+Directed (berarah): edge punya arah. A→B tidak berarti B→A (seperti follow di Instagram).
+Konsep-konsep yang dihitung</p>
+<ol class="arabic simple">
+<li><p>Matriks adjacency
+Matriks n×n. Isi A[i][j] = 1 jika ada edge dari i ke j, selain itu 0. Pada graph undirected matriksnya simetris, sedangkan pada directed tidak harus simetris (baris = asal, kolom = tujuan).</p></li>
+<li><p>Degree</p></li>
+</ol>
+<p>Undirected: jumlah edge yang menempel pada vertex.
+Directed: in-degree (jumlah edge masuk), out-degree (jumlah edge keluar), dan total degree = in + out.</p>
+<ol class="arabic simple" start="3">
+<li><p>Rata-rata degree
+Undirected: 2m/n. Directed: rata-rata in-degree = rata-rata out-degree = m/n, dan rata-rata total degree = 2m/n. Di sini m adalah jumlah edge dan n jumlah vertex.</p></li>
+<li><p>Density
+Seberapa “padat” graph dibanding kemungkinan maksimalnya. Undirected: 2m / n(n-1). Directed: m / n(n-1). Nilainya 0 sampai 1.</p></li>
+<li><p>Rata-rata lintasan terpendek
+Jarak terpendek antara dua vertex adalah jumlah edge minimum untuk menghubungkannya. Rata-ratanya dihitung dari semua pasangan vertex yang berbeda. Pada directed, jarak A→B bisa berbeda dari B→A.</p></li>
+<li><p>Koefisien klasterisasi
+Mengukur seberapa besar tetangga suatu vertex saling terhubung satu sama lain (kecenderungan membentuk segitiga). Untuk undirected: C(v) = 2 × (jumlah edge antar tetangga) / (k(k-1)), dengan k adalah degree v. Jika k &lt; 2, nilainya 0.</p></li>
+<li><p>Distribusi derajat
+Proporsi vertex yang memiliki degree tertentu. P(k) = jumlah vertex berdegree k dibagi n.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="import-library">
+<h2>Import library<a class="headerlink" href="#import-library" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>networkx: membuat dan menganalisis graph.</p></li>
+<li><p>numpy: perhitungan numerik (rata-rata).</p></li>
+<li><p>pandas: menampilkan hasil dalam bentuk tabel.</p></li>
+<li><p>matplotlib: menggambar graph dan grafik.</p></li>
+<li><p>Counter: menghitung frekuensi untuk distribusi derajat.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G_u</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="n">G_u</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">G_u</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Node :"</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">G_u</span><span class="o">.</span><span class="n">nodes</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Edge :"</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">G_u</span><span class="o">.</span><span class="n">edges</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Node : [0, 1, 2, 3, 4]
+Edge : [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3), (3, 4)]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="graph-undirected">
+<h2>Graph undirected<a class="headerlink" href="#graph-undirected" title="Link to this heading">#</a></h2>
+<p>nx.Graph() membuat graph kosong tak berarah. add_nodes_from menambah 5 vertex (0-4), dan add_edges_from menambah 6 edge. Struktur graph-nya: segitiga 0-1-2, segitiga 1-2-3, dan vertex 4 menempel hanya ke 3.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G_d</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G_d</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">G_d</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Node :"</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">G_d</span><span class="o">.</span><span class="n">nodes</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Edge :"</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">G_d</span><span class="o">.</span><span class="n">edges</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Node : [0, 1, 2, 3, 4]
+Edge : [(0, 1), (1, 2), (1, 3), (2, 0), (2, 3), (3, 4), (4, 2)]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="graph-directed">
+<h2>Graph directed<a class="headerlink" href="#graph-directed" title="Link to this heading">#</a></h2>
+<p>nx.DiGraph() membuat graph berarah dengan 7 edge. Ada siklus 0→1→2→0 dan jalur ke 3 lalu 4, yang kembali ke 2 (4→2). Siklus ini membuat setiap vertex bisa mencapai semua vertex lain (strongly connected), sehingga rata-rata lintasan terpendek bisa dihitung.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G_u</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G_u</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s2">"skyblue"</span><span class="p">,</span>
+        <span class="n">node_size</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">font_weight</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Graph Tidak Berarah"</span><span class="p">)</span>
+
+<span class="n">pos_d</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">circular_layout</span><span class="p">(</span><span class="n">G_d</span><span class="p">)</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G_d</span><span class="p">,</span> <span class="n">pos_d</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s2">"lightgreen"</span><span class="p">,</span>
+        <span class="n">node_size</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">font_weight</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">,</span>
+        <span class="n">arrows</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">arrowsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">connectionstyle</span><span class="o">=</span><span class="s2">"arc3,rad=0.1"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Graph Berarah"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1dab75fc7b1443f74796278be445ecebe912ff656be72210c6a347a3d9918aa9.png" src="_images/1dab75fc7b1443f74796278be445ecebe912ff656be72210c6a347a3d9918aa9.png" />
+</div>
+</div>
+</section>
+<section id="visualisasi">
+<h2>Visualisasi<a class="headerlink" href="#visualisasi" title="Link to this heading">#</a></h2>
+<p>Membuat dua gambar berdampingan (subplots(1, 2)). spring_layout dan circular_layout menentukan posisi node, sedangkan seed=42 membuat posisi konsisten setiap dijalankan. arrows=True menampilkan panah pada graph berarah.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nodes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">G_u</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>
+
+<span class="n">adj_u</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">to_numpy_array</span><span class="p">(</span><span class="n">G_u</span><span class="p">,</span> <span class="n">nodelist</span><span class="o">=</span><span class="n">nodes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+                     <span class="n">index</span><span class="o">=</span><span class="n">nodes</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">nodes</span><span class="p">)</span>
+<span class="n">adj_d</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">to_numpy_array</span><span class="p">(</span><span class="n">G_d</span><span class="p">,</span> <span class="n">nodelist</span><span class="o">=</span><span class="n">nodes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+                     <span class="n">index</span><span class="o">=</span><span class="n">nodes</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">nodes</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Matriks Adjacency - Tidak Berarah"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">adj_u</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Matriks Adjacency - Berarah (baris = asal, kolom = tujuan)"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">adj_d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matriks Adjacency - Tidak Berarah
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matriks Adjacency - Berarah (baris = asal, kolom = tujuan)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="matriks-adjacency">
+<h2>Matriks adjacency<a class="headerlink" href="#matriks-adjacency" title="Link to this heading">#</a></h2>
+<p>nx.to_numpy_array mengubah graph menjadi matriks, lalu dibungkus DataFrame agar ada label baris dan kolom.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Undirected</span>
+<span class="n">df_deg_u</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"Degree"</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">G_u</span><span class="o">.</span><span class="n">degree</span><span class="p">())})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Degree - Tidak Berarah"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_deg_u</span><span class="p">)</span>
+
+<span class="c1"># Directed</span>
+<span class="n">df_deg_d</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"In-Degree"</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">G_d</span><span class="o">.</span><span class="n">in_degree</span><span class="p">()),</span>
+    <span class="s2">"Out-Degree"</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">G_d</span><span class="o">.</span><span class="n">out_degree</span><span class="p">()),</span>
+    <span class="s2">"Total Degree"</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">G_d</span><span class="o">.</span><span class="n">degree</span><span class="p">())</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Degree - Berarah"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_deg_d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Degree - Tidak Berarah
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Degree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Degree - Berarah
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>In-Degree</th>
+      <th>Out-Degree</th>
+      <th>Total Degree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="degree-per-vertex">
+<h2>Degree per vertex<a class="headerlink" href="#degree-per-vertex" title="Link to this heading">#</a></h2>
+<p>G.degree() memberi degree tiap vertex. Untuk graph berarah dipakai in_degree() dan out_degree().</p>
+<ul class="simple">
+<li><p>Undirected: 0→2, 1→3, 2→3, 3→3, 4→1.</p></li>
+<li><p>Directed (in/out): 0→1/1, 1→1/2, 2→2/2, 3→2/1, 4→1/1.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_u</span><span class="p">,</span> <span class="n">m_u</span> <span class="o">=</span> <span class="n">G_u</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">(),</span> <span class="n">G_u</span><span class="o">.</span><span class="n">number_of_edges</span><span class="p">()</span>
+<span class="n">n_d</span><span class="p">,</span> <span class="n">m_d</span> <span class="o">=</span> <span class="n">G_d</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">(),</span> <span class="n">G_d</span><span class="o">.</span><span class="n">number_of_edges</span><span class="p">()</span>
+
+<span class="n">avg_deg_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">d</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">G_u</span><span class="o">.</span><span class="n">degree</span><span class="p">()])</span>          <span class="c1"># = 2m/n</span>
+<span class="n">avg_in_d</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">d</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">G_d</span><span class="o">.</span><span class="n">in_degree</span><span class="p">()])</span>       <span class="c1"># = m/n</span>
+<span class="n">avg_out_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">d</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">G_d</span><span class="o">.</span><span class="n">out_degree</span><span class="p">()])</span>      <span class="c1"># = m/n</span>
+<span class="n">avg_tot_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">d</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">G_d</span><span class="o">.</span><span class="n">degree</span><span class="p">()])</span>          <span class="c1"># = 2m/n</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Undirected : rata-rata degree      = </span><span class="si">{</span><span class="n">avg_deg_u</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Directed   : rata-rata in-degree   = </span><span class="si">{</span><span class="n">avg_in_d</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Directed   : rata-rata out-degree  = </span><span class="si">{</span><span class="n">avg_out_d</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Directed   : rata-rata total degree = </span><span class="si">{</span><span class="n">avg_tot_d</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Undirected : rata-rata degree      = 2.40
+Directed   : rata-rata in-degree   = 1.40
+Directed   : rata-rata out-degree  = 1.40
+Directed   : rata-rata total degree = 2.80
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="rata-rata-degree">
+<h2>Rata-rata degree<a class="headerlink" href="#rata-rata-degree" title="Link to this heading">#</a></h2>
+<p>Menghitung rata-rata dengan np.mean. Hasil: undirected = 12/5 = 2,4. Directed: in = out = 7/5 = 1,4, total degree = 2,8.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Density Undirected : </span><span class="si">{</span><span class="n">nx</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">G_u</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Density Directed   : </span><span class="si">{</span><span class="n">nx</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">G_d</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Density Undirected : 0.6000
+Density Directed   : 0.3500
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="density">
+<h2>Density<a class="headerlink" href="#density" title="Link to this heading">#</a></h2>
+<p>nx.density() memakai rumus di atas. Undirected = 12/20 = 0,6. Directed = 7/20 = 0,35.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rata-rata keseluruhan graph</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Rata-rata shortest path (Undirected):"</span><span class="p">,</span>
+      <span class="nb">round</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">average_shortest_path_length</span><span class="p">(</span><span class="n">G_u</span><span class="p">),</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Rata-rata shortest path (Directed)  :"</span><span class="p">,</span>
+      <span class="nb">round</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">average_shortest_path_length</span><span class="p">(</span><span class="n">G_d</span><span class="p">),</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="c1"># Rata-rata per vertex (rata-rata jarak dari vertex tsb ke semua vertex lain)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">avg_sp_per_node</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">single_source_shortest_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+        <span class="n">lengths</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>  <span class="c1"># buang jarak ke diri sendiri</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">lengths</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="n">df_sp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"Undirected"</span><span class="p">:</span> <span class="n">avg_sp_per_node</span><span class="p">(</span><span class="n">G_u</span><span class="p">),</span>
+    <span class="s2">"Directed"</span><span class="p">:</span> <span class="n">avg_sp_per_node</span><span class="p">(</span><span class="n">G_d</span><span class="p">)</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Rata-rata lintasan terpendek per vertex"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_sp</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rata-rata shortest path (Undirected): 1.5
+Rata-rata shortest path (Directed)  : 1.9
+
+Rata-rata lintasan terpendek per vertex
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Undirected</th>
+      <th>Directed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.75</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.25</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.25</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.25</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.00</td>
+      <td>2.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="lintasan-terpendek">
+<h2>Lintasan terpendek<a class="headerlink" href="#lintasan-terpendek" title="Link to this heading">#</a></h2>
+<p>average_shortest_path_length memberi rata-rata untuk seluruh graph. Fungsi avg_sp_per_node menghitung per vertex dengan single_source_shortest_path_length (jarak dari satu vertex ke semua lainnya), membuang jarak ke diri sendiri (jarak 0), lalu merata-ratakan.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_clust</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"Undirected"</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">clustering</span><span class="p">(</span><span class="n">G_u</span><span class="p">),</span>
+    <span class="s2">"Directed"</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">clustering</span><span class="p">(</span><span class="n">G_d</span><span class="p">)</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Koefisien Klasterisasi per vertex"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_clust</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Rata-rata clustering Undirected : </span><span class="si">{</span><span class="n">nx</span><span class="o">.</span><span class="n">average_clustering</span><span class="p">(</span><span class="n">G_u</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Rata-rata clustering Directed   : </span><span class="si">{</span><span class="n">nx</span><span class="o">.</span><span class="n">average_clustering</span><span class="p">(</span><span class="n">G_d</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Transitivity Undirected         : </span><span class="si">{</span><span class="n">nx</span><span class="o">.</span><span class="n">transitivity</span><span class="p">(</span><span class="n">G_u</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Koefisien Klasterisasi per vertex
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Undirected</th>
+      <th>Directed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0000</td>
+      <td>0.5000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.6667</td>
+      <td>0.3333</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.6667</td>
+      <td>0.2500</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.3333</td>
+      <td>0.3333</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0000</td>
+      <td>0.5000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rata-rata clustering Undirected : 0.5333
+Rata-rata clustering Directed   : 0.3833
+Transitivity Undirected         : 0.6000
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="koefisien-klasterisasi">
+<h2>Koefisien klasterisasi<a class="headerlink" href="#koefisien-klasterisasi" title="Link to this heading">#</a></h2>
+<p>nx.clustering() menghitung per vertex, average_clustering() merata-ratakan, dan transitivity() adalah rasio segitiga terhadap triplet pada seluruh graph. Hasil undirected:</p>
+<ul class="simple">
+<li><p>Vertex 0: tetangga {1,2}, keduanya terhubung → 1</p></li>
+<li><p>Vertex 1: tetangga {0,2,3}, 2 dari 3 pasangan terhubung → 0,667</p></li>
+<li><p>Vertex 2: sama seperti vertex 1 → 0,667</p></li>
+<li><p>Vertex 3: tetangga {1,2,4}, 1 dari 3 pasangan terhubung → 0,333</p></li>
+<li><p>Vertex 4: degree 1 → 0</p></li>
+<li><p>Rata-rata = 0,533</p></li>
+</ul>
+<p>Nilai untuk graph berarah akan muncul di output kode, karena rumusnya lebih kompleks (mempertimbangkan arah edge).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">degree_distribution</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">degrees</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s2">"Degree (k)"</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">cnt</span><span class="p">),</span>
+        <span class="s2">"Jumlah Vertex"</span><span class="p">:</span> <span class="p">[</span><span class="n">cnt</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">cnt</span><span class="p">)],</span>
+        <span class="s2">"P(k)"</span><span class="p">:</span> <span class="p">[</span><span class="n">cnt</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">/</span> <span class="n">n</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">cnt</span><span class="p">)]</span>
+    <span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Distribusi Degree - Undirected"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">degree_distribution</span><span class="p">([</span><span class="n">d</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">G_u</span><span class="o">.</span><span class="n">degree</span><span class="p">()],</span> <span class="n">n_u</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Distribusi In-Degree - Directed"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">degree_distribution</span><span class="p">([</span><span class="n">d</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">G_d</span><span class="o">.</span><span class="n">in_degree</span><span class="p">()],</span> <span class="n">n_d</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Distribusi Out-Degree - Directed"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">degree_distribution</span><span class="p">([</span><span class="n">d</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">G_d</span><span class="o">.</span><span class="n">out_degree</span><span class="p">()],</span> <span class="n">n_d</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribusi Degree - Undirected
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Degree (k)</th>
+      <th>Jumlah Vertex</th>
+      <th>P(k)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>3</td>
+      <td>0.6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribusi In-Degree - Directed
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Degree (k)</th>
+      <th>Jumlah Vertex</th>
+      <th>P(k)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>3</td>
+      <td>0.6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2</td>
+      <td>0.4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribusi Out-Degree - Directed
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Degree (k)</th>
+      <th>Jumlah Vertex</th>
+      <th>P(k)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>3</td>
+      <td>0.6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2</td>
+      <td>0.4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="distribusi-derajat-tabel">
+<h2>Distribusi derajat (tabel)<a class="headerlink" href="#distribusi-derajat-tabel" title="Link to this heading">#</a></h2>
+<p>Fungsi degree_distribution menghitung berapa vertex yang punya degree k memakai Counter, lalu membaginya dengan n untuk mendapat P(k). Untuk undirected: k=1 → 1 vertex (0,2), k=2 → 1 vertex (0,2), k=3 → 3 vertex (0,6).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">([</span><span class="n">d</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">G_u</span><span class="o">.</span><span class="n">degree</span><span class="p">()],</span> <span class="s2">"Degree (Undirected)"</span><span class="p">,</span> <span class="s2">"skyblue"</span><span class="p">),</span>
+    <span class="p">([</span><span class="n">d</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">G_d</span><span class="o">.</span><span class="n">in_degree</span><span class="p">()],</span> <span class="s2">"In-Degree (Directed)"</span><span class="p">,</span> <span class="s2">"lightgreen"</span><span class="p">),</span>
+    <span class="p">([</span><span class="n">d</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">G_d</span><span class="o">.</span><span class="n">out_degree</span><span class="p">()],</span> <span class="s2">"Out-Degree (Directed)"</span><span class="p">,</span> <span class="s2">"salmon"</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="p">(</span><span class="n">degs</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">degs</span><span class="p">)</span>
+    <span class="n">ks</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">ks</span><span class="p">,</span> <span class="p">[</span><span class="n">cnt</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">degs</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ks</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">"black"</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Degree (k)"</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"P(k)"</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">ks</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d6cefe00d9c6129135872dc572ff44211654b8051b24937237edbb717d068f2a.png" src="_images/d6cefe00d9c6129135872dc572ff44211654b8051b24937237edbb717d068f2a.png" />
+</div>
+</div>
+</section>
+<section id="distribusi-derajat-grafik">
+<h2>Distribusi derajat (grafik)<a class="headerlink" href="#distribusi-derajat-grafik" title="Link to this heading">#</a></h2>
+<p>Menampilkan tabel Cell 11 sebagai diagram batang: sumbu x adalah degree k, sumbu y adalah P(k). Ada tiga grafik, yaitu undirected, in-degree, dan out-degree.</p>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="klasifikasi_skipgram.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Klasifikasi Berita Detik</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="page_rank.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Page Rank</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">Import library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-undirected">Graph undirected</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-directed">Graph directed</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi">Visualisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriks-adjacency">Matriks adjacency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#degree-per-vertex">Degree per vertex</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rata-rata-degree">Rata-rata degree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#density">Density</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lintasan-terpendek">Lintasan terpendek</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#koefisien-klasterisasi">Koefisien klasterisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-derajat-tabel">Distribusi derajat (tabel)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-derajat-grafik">Distribusi derajat (grafik)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Achmad Sujatmiko Su'ud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
