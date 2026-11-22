@@ -3,6 +3,7 @@ Streamlit app: Web Crawler + PageRank antarwebsite.
 Jalankan lokal :  streamlit run app.py
 """
 
+import json
 import time
 from collections import defaultdict
 
@@ -10,6 +11,23 @@ import pandas as pd
 import streamlit as st
 
 from crawl_pagerank import Crawler, build_graph, get_domain, normalize_url, pagerank
+
+# --- Kompatibilitas versi Streamlit (lama & baru) ---------------------------
+try:
+    _VER = tuple(int(x) for x in st.__version__.split(".")[:2])
+except ValueError:
+    _VER = (1, 0)
+# Streamlit >= 1.50 memakai width="stretch"; versi lama memakai use_container_width=True
+WIDE = {"width": "stretch"} if _VER >= (1, 50) else {"use_container_width": True}
+
+
+def show_html(html_str, height):
+    """Tampilkan HTML (graph pyvis). st.iframe hanya ada di Streamlit baru."""
+    if hasattr(st, "iframe"):
+        st.iframe(html_str, width="stretch", height=height)
+    else:
+        import streamlit.components.v1 as components
+        components.html(html_str, height=height, scrolling=False)
 
 st.set_page_config(page_title="WebRank Explorer", page_icon="🕸️", layout="wide")
 
@@ -83,7 +101,7 @@ with c_in:
     url_input = st.text_input("🔗 Link website", placeholder="https://www.wikipedia.org",
                               label_visibility="collapsed")
 with c_btn:
-    run = st.button("Analisis", type="primary", width="stretch")
+    run = st.button("Analisis", type="primary", **WIDE)
 
 st.caption("Contoh: `https://www.wikipedia.org` · `https://news.ycombinator.com` · `https://github.com`")
 
@@ -173,12 +191,126 @@ def lerp_color(t):
     return "#%02x%02x%02x" % tuple(int(a[k] + (b[k] - a[k]) * f) for k in range(3))
 
 
-def build_html(G, pr, seed, top_n):
+def make_index(res):
+    """Indeks sekali jalan: inlink, outlink, dan daftar halaman per website."""
+    inl, outl, pages = defaultdict(list), defaultdict(list), defaultdict(list)
+    for (u, v), c in res["edges"].items():
+        outl[u].append((v, c))
+        inl[v].append((u, c))
+    for url, title in res["titles"].items():
+        pages[get_domain(url)].append({"url": url, "title": title or ""})
+    return inl, outl, pages
+
+
+def node_details(n, pr, rank, seed, res, index, limit=100):
+    inl, outl, pages = index
+    by_count = lambda lst: [{"site": s, "n": c} for s, c in sorted(lst, key=lambda x: (-x[1], x[0]))]
+    i_list, o_list = by_count(inl.get(n, [])), by_count(outl.get(n, []))
+    return {
+        "rank": rank[n], "pr": round(pr[n], 6), "seed": n == seed,
+        "in_total": sum(x["n"] for x in i_list), "out_total": sum(x["n"] for x in o_list),
+        "in_count": len(i_list), "out_count": len(o_list),
+        "in": i_list[:limit], "out": o_list[:limit],
+        "crawled": res["crawled"].get(n, 0), "pages": pages.get(n, [])[:limit],
+    }
+
+
+# CSS + HTML + JS panel detail yang disisipkan ke dalam halaman graph pyvis.
+# Semua teks dari website luar ditulis dengan textContent (bukan innerHTML) agar aman dari XSS.
+PANEL_JS = r"""
+<style>
+#nodePanel{position:fixed;top:12px;right:12px;width:350px;max-width:92%;max-height:calc(100% - 24px);
+ overflow-y:auto;display:none;z-index:50;background:#161b26;color:#e5e7eb;border:1px solid #3b4557;
+ border-radius:18px;box-shadow:0 14px 44px rgba(0,0,0,.6);font:13px/1.45 system-ui,Segoe UI,sans-serif;}
+#nodePanel .hd{padding:14px 16px 10px;background:linear-gradient(135deg,#4f46e5,#7c3aed 55%,#db2777);
+ border-radius:18px 18px 0 0;position:sticky;top:0}
+#nodePanel .ttl{font-size:16px;font-weight:800;word-break:break-all;padding-right:26px}
+#nodePanel .x{position:absolute;top:10px;right:12px;cursor:pointer;font-size:20px;line-height:1;opacity:.9;
+ background:none;border:0;color:#fff}
+#nodePanel .bdg{display:inline-block;margin:6px 6px 0 0;padding:2px 9px;border-radius:99px;
+ background:rgba(255,255,255,.2);font-size:11.5px}
+#nodePanel .bd{padding:12px 14px 14px}
+#nodePanel .stats{display:flex;gap:8px;margin-bottom:10px}
+#nodePanel .st{flex:1;background:#1f2633;border:1px solid #334155;border-radius:12px;padding:8px;text-align:center}
+#nodePanel .st b{display:block;font-size:18px}
+#nodePanel .st span{font-size:10.5px;opacity:.7;text-transform:uppercase;letter-spacing:.05em}
+#nodePanel details{margin-top:8px;background:#1b2130;border:1px solid #2d384b;border-radius:12px;padding:6px 10px}
+#nodePanel summary{cursor:pointer;font-weight:700;padding:4px 0}
+#nodePanel .row{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-top:1px solid #2a3344}
+#nodePanel .row .nm{word-break:break-all}
+#nodePanel .lnk{color:#a78bfa;cursor:pointer;text-decoration:underline dotted}
+#nodePanel .cnt{opacity:.75;white-space:nowrap}
+#nodePanel .muted{opacity:.6;padding:4px 0}
+#nodePanel a{color:#93c5fd;text-decoration:none;word-break:break-all}
+#nodePanel .sub{display:block;font-size:11px;opacity:.6;word-break:break-all}
+#nodePanel .open{display:inline-block;margin-top:10px;font-size:12px}
+</style>
+<div id="nodePanel"></div>
+<script>
+(function(){
+  var DETAILS = __DETAILS__;
+  var panel = document.getElementById("nodePanel");
+  function el(tag, cls, text){var e=document.createElement(tag); if(cls)e.className=cls; if(text!==undefined)e.textContent=text; return e;}
+  function safeUrl(u){return /^https?:\/\//i.test(u) ? u : "#";}
+  function go(id){network.selectNodes([id]); network.focus(id,{scale:1.1,animation:{duration:500}}); show(id);}
+  function siteRow(it){
+    var r=el("div","row"), nm=el("span","nm");
+    if(DETAILS[it.site]){var a=el("span","lnk",it.site); a.onclick=function(){go(it.site);}; nm.appendChild(a);}
+    else nm.textContent=it.site;
+    r.appendChild(nm); r.appendChild(el("span","cnt","×"+it.n)); return r;
+  }
+  function pageRow(it){
+    var r=el("div","row"), box=el("span","nm"), a=el("a","",it.title||it.url);
+    a.href=safeUrl(it.url); a.target="_blank"; a.rel="noopener noreferrer";
+    box.appendChild(a); if(it.title){box.appendChild(el("span","sub",it.url));}
+    r.appendChild(box); return r;
+  }
+  function section(title,total,items,render,open){
+    var d=el("details"); if(open)d.open=true;
+    d.appendChild(el("summary","",title+" ("+total+")"));
+    if(!items.length) d.appendChild(el("div","muted","Tidak ada."));
+    items.slice(0,30).forEach(function(it){d.appendChild(render(it));});
+    if(total>30) d.appendChild(el("div","muted","… dan "+(total-30)+" lainnya (lihat tab Detail di bawah graph)"));
+    return d;
+  }
+  function stat(v,l){var s=el("div","st"); s.appendChild(el("b","",String(v))); s.appendChild(el("span","",l)); return s;}
+  function hide(){panel.style.display="none";}
+  function show(id){
+    var d=DETAILS[id]; if(!d) return;
+    panel.textContent="";
+    var hd=el("div","hd"); var x=el("button","x","×"); x.onclick=hide;
+    hd.appendChild(x); hd.appendChild(el("div","ttl",id));
+    hd.appendChild(el("span","bdg","Peringkat #"+d.rank));
+    hd.appendChild(el("span","bdg","PageRank "+d.pr.toFixed(5)));
+    if(d.seed) hd.appendChild(el("span","bdg","⭐ Website awal"));
+    panel.appendChild(hd);
+    var bd=el("div","bd"), st=el("div","stats");
+    st.appendChild(stat(d.in_count,"Inlink")); st.appendChild(stat(d.out_count,"Outlink")); st.appendChild(stat(d.crawled,"Halaman"));
+    bd.appendChild(st);
+    bd.appendChild(section("⬅️ Inlink – website yang menaut ke sini",d.in_count,d.in,siteRow,true));
+    bd.appendChild(section("➡️ Outlink – website yang ditautkan",d.out_count,d.out,siteRow,true));
+    bd.appendChild(section("📄 Halaman yang di-crawl",d.crawled,d.pages,pageRow,false));
+    var first=d.pages.length?d.pages[0].url:"";
+    var m=first.match(/^https?:\/\/[^\/]+/i);
+    var o=el("a","open","Buka website ↗"); o.href=safeUrl(m?m[0]:"https://"+id); o.target="_blank"; o.rel="noopener noreferrer";
+    bd.appendChild(o); panel.appendChild(bd); panel.style.display="block"; panel.scrollTop=0;
+  }
+  network.on("click",function(p){ if(p.nodes.length) show(p.nodes[0]); else hide(); });
+})();
+</script>
+"""
+
+
+def build_html(G, pr, seed, top_n, res):
     from pyvis.network import Network
     keep = {n for n, _ in sorted(pr.items(), key=lambda x: -x[1])[:top_n]} | {seed}
     H = G.subgraph(keep)
     vmax, vmin = max(pr[n] for n in H), min(pr[n] for n in H)
     span = (vmax - vmin) or 1
+    rank = {n: i for i, (n, _) in enumerate(sorted(pr.items(), key=lambda x: -x[1]), 1)}
+    index = make_index(res)
+    details = {n: node_details(n, pr, rank, seed, res, index) for n in H.nodes()}
+
     net = Network(height="640px", width="100%", directed=True, bgcolor="#0e1117",
                   font_color="#e5e7eb", cdn_resources="in_line")
     for n in H.nodes():
@@ -188,7 +320,7 @@ def build_html(G, pr, seed, top_n):
                      color={"background": "#fbbf24" if is_seed else lerp_color(t),
                             "border": "#ffffff" if is_seed else "#1f2937"},
                      borderWidth=3 if is_seed else 1,
-                     title=f"{n}\nPageRank: {pr[n]:.5f}\nMasuk: {H.in_degree(n)} · Keluar: {H.out_degree(n)}")
+                     title=f"{n}\nPageRank: {pr[n]:.5f}\nKlik untuk detail")
     for u, v, d in H.edges(data=True):
         net.add_edge(u, v, value=d.get("weight", 1), color={"color": "rgba(148,163,184,.45)"})
     net.set_options("""{
@@ -198,16 +330,52 @@ def build_html(G, pr, seed, top_n):
                   "stabilization": {"iterations": 200}},
       "edges": {"smooth": {"type": "continuous"}, "arrows": {"to": {"scaleFactor": 0.6}}}
     }""")
-    return net.generate_html(notebook=False)
+    page = net.generate_html(notebook=False)
+    payload = json.dumps(details, ensure_ascii=False).replace("</", "<\\/")
+    return page.replace("</body>", PANEL_JS.replace("__DETAILS__", payload) + "</body>", 1)
 
 
 with tab_graph:
     n_total = G.number_of_nodes()
     top_n = n_total if n_total <= 10 else st.slider(
         "Jumlah website ditampilkan (berdasarkan PageRank tertinggi)", 5, n_total, min(n_total, 40))
-    st.iframe(build_html(G, pr, seed, top_n), width="stretch", height=660)
-    st.caption("🟡 = website awal yang Anda masukkan · ukuran & warna node = PageRank · "
-               "anak panah = arah tautan · scroll untuk zoom, seret untuk menggeser.")
+    show_html(build_html(G, pr, seed, top_n, res), 660)
+    st.caption("🖱️ **Klik node** untuk membuka panel detail (inlink, outlink, halaman yang di-crawl). "
+               "🟡 = website awal · ukuran & warna node = PageRank · scroll untuk zoom, seret untuk menggeser.")
+
+    # ---- Detail lengkap (tanpa batas 30 baris, selalu tersedia) ----
+    st.markdown("#### 🔎 Detail lengkap website")
+    index = make_index(res)
+    rank_map = {n: i for i, (n, _) in enumerate(ranking, 1)}
+    pick = st.selectbox("Pilih website", [n for n, _ in ranking],
+                        format_func=lambda n: f"#{rank_map[n]} · {n}")
+    d = node_details(pick, pr, rank_map, seed, res, index, limit=10_000)
+    k1, k2, k3, k4 = st.columns(4)
+    k1.metric("Peringkat", f"#{d['rank']}")
+    k2.metric("PageRank", f"{d['pr']:.5f}")
+    k3.metric("Inlink", f"{d['in_count']} website", f"{d['in_total']} tautan", delta_color="off")
+    k4.metric("Outlink", f"{d['out_count']} website", f"{d['out_total']} tautan", delta_color="off")
+
+    t_in, t_out, t_pages = st.tabs(["⬅️ Inlink", "➡️ Outlink", "📄 Halaman di-crawl"])
+    with t_in:
+        if d["in"]:
+            st.dataframe(pd.DataFrame(d["in"]).rename(columns={"site": "Website asal", "n": "Jumlah tautan"}),
+                         hide_index=True, **WIDE)
+        else:
+            st.caption("Tidak ada website yang menaut ke sini pada crawl ini.")
+    with t_out:
+        if d["out"]:
+            st.dataframe(pd.DataFrame(d["out"]).rename(columns={"site": "Website tujuan", "n": "Jumlah tautan"}),
+                         hide_index=True, **WIDE)
+        else:
+            st.caption("Tidak ada tautan keluar yang tercatat (website ini mungkin tidak di-crawl).")
+    with t_pages:
+        if d["pages"]:
+            st.dataframe(pd.DataFrame(d["pages"]).rename(columns={"url": "URL", "title": "Judul"})[["Judul", "URL"]],
+                         hide_index=True, **WIDE,
+                         column_config={"URL": st.column_config.LinkColumn("URL")})
+        else:
+            st.caption("Tidak ada halaman website ini yang di-crawl (hanya muncul sebagai tujuan tautan).")
 
 # --------------------------------------------------------------------------
 # Tab Peringkat
@@ -222,7 +390,7 @@ with tab_rank:
     left, right = st.columns([3, 2])
     with left:
         st.dataframe(
-            df_rank, hide_index=True, width="stretch", height=470,
+            df_rank, hide_index=True, **WIDE, height=470,
             column_config={
                 "PageRank": st.column_config.ProgressColumn(
                     "PageRank", format="%.5f", min_value=0, max_value=float(df_rank["PageRank"].max())),
@@ -283,7 +451,7 @@ with tab_dl:
     ).sort_values("jumlah_tautan", ascending=False)
     d1, d2 = st.columns(2)
     d1.download_button("⬇️ pagerank.csv", df_rank.to_csv(index=False).encode("utf-8"),
-                       "pagerank.csv", "text/csv", width="stretch")
+                       "pagerank.csv", "text/csv", **WIDE)
     d2.download_button("⬇️ edges.csv", df_edges.to_csv(index=False).encode("utf-8"),
-                       "edges.csv", "text/csv", width="stretch")
+                       "edges.csv", "text/csv", **WIDE)
     st.caption(f"Crawl selesai dalam {res['elapsed']:.1f} detik · seed: {res['url']}")
